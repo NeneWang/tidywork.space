@@ -44,24 +44,24 @@
             <main>
                 <!-- bootstrap container -->
                 <b-container> 
-                    <!-- single row of taskLists, contains b-cols which contain b-cards -->
+                    <!-- single row of columns, contains b-cols which contain b-cards -->
                     <b-row :cols="columns.length">
                         <b-col
                             v-for="(column, col) in columns"
                             :key="col"
                         > 
-                            <!-- taskList card -->
+                            <!-- column card -->
                                 <b-card
                                     :title="column.name"     
                                 > 
-                                    <!-- taskList card BODY -->
+                                    <!-- column card BODY -->
                                     <b-card-body>
-                                        <b-row cols="1"> <!-- one column because cards should be stacked inside taskList-->
+                                        <b-row cols="1"> <!-- one column because cards should be stacked inside column-->
                                             <b-col
                                                 v-for="(card, car) in column.cards" 
                                                 :key="car"
                                             >
-                                                <!-- actual card inside taskList-->
+                                                <!-- actual card inside column-->
                                                 <b-card 
                                                     :title="card.name" 
                                                     :style="{backgroundColor: card.color}"
@@ -126,6 +126,32 @@
                                             </b-col>
                                         </b-row>
                                     </b-card-body>
+
+                                    <!-- COLUMN card FOOTER -->
+                                    <b-card-footer>
+                                        <!-- button to edit column -->
+                                        <b-button 
+                                            v-b-modal="'editColumnModal'+col" 
+                                            variant="dark" 
+                                            block>Edit Column</b-button>
+                                    
+                                        <!-- edit column MODAL -->
+                                        <b-modal 
+                                            :id="'editColumnModal'+col" 
+                                            @ok="" 
+                                            @cancel="" 
+                                            title="Edit Column" 
+                                            ok-title="Save Changes">
+                                            <!-- Column title  -->
+                                            <label><b>List Title</b></label>
+                                            <input v-model="column.name" style="width: 100%" type="text"></input>
+                                            <hr />
+                                    
+                                            <!-- TODO: delete column button -->
+                                            
+                                        </b-modal>
+                                    
+                                    </b-card-footer>
                                 </b-card>
                         </b-col>    
 
