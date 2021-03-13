@@ -113,7 +113,7 @@
                                                                 <ul>
                                                                     <li v-for="(comment, com) in card.comments" :key="com">
                                                                         <div>
-                                                                            <p>Comment Timestamp: {{comment.timestamp}}</p>
+                                                                            <p>Comment Timestamp: {{displayDate(comment.timestamp)}}</p>
                                                                             <p>Comment Description: {{comment.description}}</p>
                                                                         </div>
                                                                     </li>
