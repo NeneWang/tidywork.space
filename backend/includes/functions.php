@@ -32,32 +32,13 @@ function updateBoardIf($boardId, $boardData)
 }
 
 
-function updateUserIf($userId, $userData)
-{
-    global $connection;
-    $query = "INSERT INTO users (userId, userData) VALUES ($userId, '$userData') ON DUPLICATE KEY UPDATE userData='$userData' ";
-
-    // echo($query);
-
-    $update_query = mysqli_query($connection, $query);
-}
-
-
-function updateUserIf($userId, $userData)
-{
-    global $connection;
-    $query = "INSERT INTO users (userId, userData) VALUES ($userId, '$userData') ON DUPLICATE KEY UPDATE userData='$userData' ";
-
-    // echo($query);
-
-    $update_query = mysqli_query($connection, $query);
-}
 
 
 function updateColumnIf($columnId, $columnData)
 {
+    // echo($columnData);
     global $connection;
-    $query = "INSERT INTO columns (columnId, columnData) VALUES ($columnId, '$columnData') ON DUPLICATE KEY UPDATE columnData='$columnData' ";
+    $query = "INSERT INTO columns (columnId, columnData) VALUES ($columnId, '{$columnData}') ON DUPLICATE KEY UPDATE columnData='$columnData' ";
 
     // echo($query);
 

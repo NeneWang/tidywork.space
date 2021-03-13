@@ -1,6 +1,9 @@
 <?php
 
 include '../includes/db.php';
+include '../includes/functions.php';
+
+
 header("Content-Type:application/json");
 
 if (isset($_POST["update"])) {
@@ -8,14 +11,41 @@ if (isset($_POST["update"])) {
     //  echo ($update);
 
 
-    $dataArray = json_decode($update);
-    $userId = $dataArray->users[0]->userId;
-    $jsonFormattedUserData = json_encode($dataArray->users[0]->userData);
-    updateUserIf($userId, $jsonFormattedUserData);
 
-    $boardId = $dataArray->boards[0]->boardId;
-    $jsonFormattedBoardData = json_encode($dataArray->boards[0]->boardData);
-    updateboardIf($boardId, $jsonFormattedBoardData);
+    $dataArray = json_decode($update);
+
+    // echo (count($dataArray->users));
+    for ($i = 0; $i < count($dataArray->users); $i++) {
+        $userId = $dataArray->users[$i]->userId;
+        $jsonFormattedUserData = json_encode($dataArray->users[$i]->userData);
+        updateUserIf($userId, addslashes($jsonFormattedUserData));
+    }
+
+
+
+    // $boardId = $dataArray->boards[0]->boardId;
+    // $jsonFormattedBoardData = json_encode($dataArray->boards[0]->boardData);
+    // print_r($jsonFormattedBoardData);
+    // updateboardIf($boardId, $jsonFormattedBoardData);
+
+    // $columnId = $dataArray->columns[0]->columnId;
+    // $jsonFormattedColumnData = json_encode($dataArray->columns[0]->columnData);
+    // // print_r($jsonFormattedColumnData);
+    // // echo(addslashes($jsonFormattedColumnData));
+    // updateColumnIf($columnId, addslashes($jsonFormattedColumnData));
+
+    // $cardId = $dataArray->cards[0]->cardId;
+    // $jsonFormattedCardData = json_encode($dataArray->cards[0]->cardData);
+    // updateCardIf($cardId, $jsonFormattedCardData);
+
+    // $tagId = $dataArray->tags[0]->tagId;
+    // $jsonFormattedTagData = json_encode($dataArray->tags[0]->tagData);
+    // updateTagIf($tagId, $jsonFormattedTagData);
+
+    // $commentId = $dataArray->comments[0]->commentId;
+    // $jsonFormattedcCmmentData = json_encode($dataArray->comments[0]->commentData);
+    // // print_r($jsonFormattedcCmmentData);
+    // updateCommentIf($commentId, $jsonFormattedCommentData);
 }
 
 
@@ -32,7 +62,7 @@ if (isset($_GET['userId']) && $_GET['userId'] != "") {
     } else {
         individualResponse(NULL, NULL, NULL, NULL, NULL, "No Record Found");
     }
-} else if(!isset($_POST["update"])){
+} else if (!isset($_POST["update"])) {
     returnAllBoards();
 }
 $response = "";
@@ -61,7 +91,7 @@ function returnAllBoards()
     $ind_item = array();
 
     while ($row = mysqli_fetch_assoc($result)) {
-              $ind_item = array();
+        $ind_item = array();
 
         $ind_item = array();
 
@@ -87,7 +117,7 @@ function returnAllBoards()
     $ind_item = array();
 
     while ($row = mysqli_fetch_assoc($result)) {
-              $ind_item = array();
+        $ind_item = array();
         extract($row);
         // individualResponse($boardId, $boardData);
         $ind_item["boardId"] = $boardId;
@@ -110,7 +140,7 @@ function returnAllBoards()
     $ind_item = array();
 
     while ($row = mysqli_fetch_assoc($result)) {
-              $ind_item = array();
+        $ind_item = array();
         extract($row);
         // individualResponse($columnId, $columnData);
         $ind_item["columnId"] = $columnId;
@@ -157,7 +187,7 @@ function returnAllBoards()
     $ind_item = array();
 
     while ($row = mysqli_fetch_assoc($result)) {
-              $ind_item = array();
+        $ind_item = array();
         extract($row);
         // individualResponse($tagId, $tagData);
         $ind_item["tagId"] = $tagId;
@@ -181,7 +211,7 @@ function returnAllBoards()
     $ind_item = array();
 
     while ($row = mysqli_fetch_assoc($result)) {
-              $ind_item = array();
+        $ind_item = array();
         extract($row);
         // individualResponse($commentId, $commentData);
         $ind_item["commentId"] = $commentId;
