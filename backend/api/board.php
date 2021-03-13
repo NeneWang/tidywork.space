@@ -23,6 +23,9 @@ if (isset($_GET['userId']) && $_GET['userId'] != "") {
 $response = "";
 $responseArray = array();
 $item = array();
+
+
+
 function returnAllBoards()
 {
     global $response;
@@ -168,16 +171,6 @@ function returnAllBoards()
     }
 
     $responseArray["comments"] = $item;
-
-
-
-
-
-
-
-
-
-
 
     $response = json_encode($responseArray);
 
