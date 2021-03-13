@@ -34,8 +34,44 @@
         <!-- test value to make sure vue works-->
         <h1>Test Text: {{testText}} </h1>
 
-        <!-- TODO: page header -->
+        <!-- page header -->
         <header>
+            <!-- create column modal button -->
+            <b-button 
+                v-b-modal="'newColumnModal'+currentBoard.name" 
+                variant="info" 
+                block>New Column</b-button>
+            
+            <!-- create column project modal  -->
+            <b-modal 
+                :id="'newColumnModal'+currentBoard.name"
+                :title="newColumn.name" 
+                ok-only 
+                ok-title="Create List"
+                @ok="createColumn()">
+                
+                <!-- actual edit column modal -->
+            
+                <!-- column title  -->
+                <label><b>Column Title</b></label>
+                <input v-model="newColumn.name" style="width: 100%" type="text" placeholder="Column Name"></input>
+                <hr />
+            
+                <!-- column color  -->
+                <label><b>Column Color</b></label>
+                <input v-model="newColumn.color" style="width: 100%" type="color"></input>
+                <hr />
+            
+                <!-- column ordering -->
+                <label><b>Card Ordering</b></label>
+                <select name="cardOrder" id="newCardOrder" v-model="newColumn.order">
+                    <option value="alphabetical">Order alphabetically</option>
+                    <option value="priority">Order by card priority</option>
+                    <option value="deadline">Order by card deadline</option>
+                </select>
+            
+            
+            </b-modal>
 
         </header>
 
