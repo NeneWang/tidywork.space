@@ -143,6 +143,13 @@
                                                                 <input v-model="columns[col].cards[car].deadline" style="width: 100%" type="datetime-local"></input>
                                                                 <hr />
 
+                                                                <!-- add comments -->
+                                                                <label><b>Add Comment</b></label>
+                                                                <input placeholder="Comment" v-model="newComment.description" style="width: 100%" type="text"></input>
+                                                                <hr />
+                                                                
+                                                                <b-button variant="info" block @click="createComment(col, car)">Add Comment</b-button>
+
                                                                 <!-- view comments -->
                                                                 <label><b>Comments</b></label>
                                                                 <ul>

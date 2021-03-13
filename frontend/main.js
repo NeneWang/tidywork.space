@@ -39,7 +39,7 @@ const app = new Vue({
             newComment: {
                 commentId: null, 
                 timestamp: "",
-                color: ""
+                description: ""
             }, 
             newTag: {
                 tagId: null, 
@@ -75,6 +75,18 @@ const app = new Vue({
                 return d + " @ " + time;
             } 
         }, 
+        // adds comment to card
+        createComment(column, card) {
+            // prepare comment content
+            let now = new Date();
+            let newCommentToAdd = new Comment(this.newComment.commentId, this.javascriptDateObjectToISOString(now), this.newComment.description);
+
+            // add comment to card 
+            this.columns[column].cards[card].comments.push(newCommentToAdd);
+
+            // reset field
+            this.newComment = resetNewComment;
+        },
         // creates a new card and adds it to a specific column based on the column index (col)
         createCard(col) {
             // prevent user from creating card without all fields 
