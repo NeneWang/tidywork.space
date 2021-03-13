@@ -70,7 +70,7 @@ const app = new Vue({
             // console.log(JSON.stringify(dataToUpload));
 
             const params = new URLSearchParams()
-            params.append('update', dataToUpload)
+            params.append('update', JSON.stringify(dataToUpload))
 
             // var obj = {};
             // obj["update"] = dataToUpload;
