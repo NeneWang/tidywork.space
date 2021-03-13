@@ -56,13 +56,41 @@
                                     <!-- taskList card BODY -->
                                     <b-card-body>
                                         <b-row cols="1"> <!-- one column because cards should be stacked inside taskList-->
-                                            <b-col>
+                                            <b-col
+                                                v-for="(card, car) in column.cards" 
+                                                :key="car"
+                                            >
                                                 <!-- actual card inside taskList-->
-                                                <b-card title="CARD NAME">
+                                                <b-card 
+                                                    :title="card.name" 
+                                                    :style="{backgroundColor: card.color}"
+                                                >
                                                     <!-- card details -->
                                                     <div class="card-content">
-                                                        <p>CARD DETAILS</p>
+                                                        <p>{{card.description}}</p>
                                                     </div>
+
+                                                    <!-- card FOOTER -->
+                                                    <b-card-footer> 
+                                                        <!-- modal button to show card details -->
+                                                        <b-button 
+                                                            v-b-modal="'viewCardModal'+col+car" 
+                                                            variant="info" 
+                                                            block>View Card</b-button>
+
+                                                            <!-- modal to view/edit card detials -->
+                                                            <b-modal 
+                                                                :id="'viewCardModal'+col+car" 
+                                                                :title="card.name" 
+                                                                ok-only 
+                                                                ok-title="Close Card">
+
+                                                                <!-- modal CONTENT to view/edit card detials -->
+                                                                <p>HELLO WORLD</p>
+
+
+                                                            </b-modal>  
+                                                    </b-card-footer>
                                                 </b-card>
                                             </b-col>
                                         </b-row>
