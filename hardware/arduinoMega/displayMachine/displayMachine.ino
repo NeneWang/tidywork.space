@@ -11,6 +11,7 @@ const int COUNTER_MAX = 25;
 #define MODE_PAUSE 1
 
 
+
 //Tuch screen
 #define TS_MINX 920
 #define TS_MINY 120
@@ -45,8 +46,13 @@ Elegoo_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
 
 //##variables
 
-long counterSegs = 0, timerSegs = 0;
+long counterSegs = 0, timerSegs = 0, ms = 0;
 String cardName - "sample card", tableName = "Doing", timerText = "";
+
+//controllers
+int counterStatus = MODE_PAUSE;
+int timerStatus = MODE_PAUSE;
+
 
 
 
@@ -62,10 +68,28 @@ void setup() {
   fillScreen();
 
 
-
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
 
+}
+
+
+
+void timerOne(void) {
+
+  ms = ms + 1;
+  if (ms >= 1000) {
+    //iterateEverySecond();
+    segs = segs + 1;
+    ms = 0;
+    if (counterStatus == MODE_WORK) {
+      counterSegs = counterSegs + 1;
+    }
+
+    if (timerStatus == MODE_WORK) {
+      timerSegs = timerSegs + 1;
+    }
+  }
 }
