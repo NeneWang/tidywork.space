@@ -1,6 +1,6 @@
 <?php
 
-include 'includes/db.php';
+include '../includes/db.php';
 
 global $connection;
 $query = "SELECT * FROM `users`";
@@ -13,8 +13,5 @@ while ($row = mysqli_fetch_assoc($result)) {
     echo($userData);
 }
 
-echo("Echo should be working");
 
 ?>
-
-Hey 

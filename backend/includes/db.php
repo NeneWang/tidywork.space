@@ -1,33 +1,21 @@
 <?php
 
-$servername = "localhost";
-$username = "root";
-$password = "root";
+ob_start();
 
-// Create connection
-$connection;
-try {
-    $connection = new PDO("mysql:host=$servername;dbname=tidywork", $username, $password);
-    // set the PDO error mode to exception
-    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Connected successfully";
-  } catch(PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
-  }
+ session_start(); 
 
+$db['db_host'] = "localhost";
+$db['db_user'] = "root";
+$db['db_pass'] = "root";
+$db['db_name'] = "tidywork";
 
-
-
-$query = "SELECT * FROM `users`";
-  $select_all_collections = mysqli_query($connection,$query);
-
-echo("whats wrong?");
-while($row = mysqli_fetch_assoc($select_all_collections)) {
-    extract($row);
-    echo($userData);
-    echo("another proof?");
+foreach($db as $key => $value){
+define(strtoupper($key), $value);
 }
 
+$connection = mysqli_connect(DB_HOST, DB_USER,DB_PASS,DB_NAME);
+
+$query = "SET NAMES utf8";
 
 
 ?>
