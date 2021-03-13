@@ -39,7 +39,7 @@ function returnAllUsers(){
 function individualResponse($userId, $userData){
     $response = array();
     $response["userId"] = $userId;
-    $response["userData"] = $userData;
+    array_push($response, json_decode($userData));
 
     $json_response = json_encode($response);
     echo $json_response;
