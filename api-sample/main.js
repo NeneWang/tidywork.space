@@ -62,21 +62,33 @@ const app = new Vue({
                     // ##TODO: make this equivalent to wahtever data you are using
                     console.log(response.data)
                 }
-            );
+                );
         },
         uploadApi: function (dataToUpload) {
 
-            console.log("posting the following data: ");           
+            console.log("posting the following data: ");
             // console.log(JSON.stringify(dataToUpload));
-            
 
-            axios.post('http://wngnelson.com/api/tidywork/api/board.php', {
-                update: dataToUpload,
-                
-            }).then((res) => {
-                console.log(res);
-                console.log(res["request"]);
-            });
+            const params = new URLSearchParams()
+            params.append('update', dataToUpload)
+
+            // var obj = {};
+            // obj["update"] = dataToUpload;
+
+            const config = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }
+
+
+            axios.post('http://wngnelson.com/api/tidywork/api/board.php',
+                params
+
+                , config).then((res) => {
+                    console.log(res);
+                    console.log(res["data"]);
+                });
         },
 
 
