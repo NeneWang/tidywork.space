@@ -31,6 +31,7 @@ if (isset($_GET["completedCardId"])) {
     $ind_item = array();
     if (mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_array($result);
+        extract($row);
         $ind_item["cardId"] = $cardId;
         $ind_item["cardData"] = json_decode($cardData);
         
