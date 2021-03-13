@@ -72,8 +72,35 @@ const app = new Vue({
                 time = dateComponents[2].substring(3);
                 d = [month, day, year].join("/")
                 return d + " @ " + time;
+            } 
+        }, 
+        // creates a new card and adds it to a specific column based on the column index (col)
+        createCard(col) {
+            // prevent user from creating card without all fields 
+            // TODO: improve later to handle blank inputs
+            if (this.newCard.name === "" || this.newCard.description === "" || this.newCard.deadline === "" || this.newCard.priority === "") {
+                window.alert("Please fill in all card fields!");
+                return;
             }
-        }
+            // create new card using constructor 
+            let newCardToAdd = new Card(this.newCard.cardId, this.newCard.columnId, this.newCard.name, this.newCard.color, this.newCard.description, this.newCard.deadline, this.newCard.priority, this.newCard.tags, [], [],[]);
+            // push new card to the list of column's cards
+            this.columns[col].cards.push(newCardToAdd);
+            // reset newCard fields 
+            this.newCard = {
+                cardId: null,
+                columnId: null,
+                name: "",
+                color: "",
+                description: "",
+                deadline: "",
+                priority: "",
+                tags: [],
+                comments: [],
+                checklists: [],
+                assignedTo: [],
+                showModal: false};
+        }, 
     }
 }); 
 
