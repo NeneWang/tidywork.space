@@ -29,8 +29,51 @@
 
 <body>
     <div id="app">
-        <h1>HELLO WORLD</h1>
-        <h2>Test Text: {{testText}} </h2>
+        <!-- test value to make sure vue works-->
+        <h1>Test Text: {{testText}} </h1>
+
+        <!-- TODO: page header -->
+        <header>
+
+        </header>
+
+        <!-- tidywork.space board container -->
+        <div class="container">
+            <main>
+                <!-- bootstrap container -->
+                <b-container> 
+                    <!-- single row of taskLists, contains b-cols which contain b-cards -->
+                    <b-row>
+                        <b-col> 
+                            <!-- taskList card -->
+                                <b-card> 
+                                    <!-- taskList card BODY -->
+                                    <b-card-body>
+                                        <b-row cols="1"> <!-- one column because cards should be stacked inside taskList-->
+                                            <b-col>
+                                                <!-- actual card inside taskList-->
+                                                <b-card title="CARD NAME">
+                                                    <!-- card details -->
+                                                    <div class="card-content">
+                                                        <p>CARD DETAILS</p>
+                                                    </div>
+                                                </b-card>
+                                            </b-col>
+                                        </b-row>
+                                    </b-card-body>
+                                </b-card>
+                        </b-col>    
+
+                    </b-row>
+
+                </b-container>  
+
+            </main>
+
+
+        </div>
+
+
     </div>  
 </body> 
 </html>
