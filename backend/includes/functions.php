@@ -77,4 +77,6 @@ function updateCommentIf($commentId, $commentData)
     $update_query = mysqli_query($connection, $query);
 }
 
+
+
 ?>
