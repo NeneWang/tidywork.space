@@ -97,6 +97,10 @@ const app = new Vue({
             // reset newColumn fields 
             this.newColumn = resetNewColumn; 
         },
+        // deletes card from column based on indicies
+        deleteCard(column, card) {
+            this.columns[column].cards.splice(card, 1);
+        },
     }
 }); 
 

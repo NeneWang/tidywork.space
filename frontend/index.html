@@ -124,7 +124,6 @@
                                                                 ok-title="Close Card">
 
                                                                 <!-- modal CONTENT to view/edit card detials -->
-                                                                <p>HELLO WORLD</p>
 
                                                                 <!-- edit title -->
                                                                 <label><b>Card Title</b></label>
@@ -156,6 +155,10 @@
                                                                         </div>
                                                                     </li>
                                                                 </ul>
+
+                                                                <!-- delete card button -->
+                                                                <b-button variant="danger" block @click="deleteCard(col, car)">Delete Card</b-button>
+
 
                                                             </b-modal>  
                                                     </b-card-footer>
