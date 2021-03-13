@@ -3,6 +3,21 @@
 include '../includes/db.php';
 header("Content-Type:application/json");
 
+if (isset($_POST["update"])) {
+    extract($_POST);
+    //  echo ($update);
+
+
+    $dataArray = json_decode($update);
+    $userId = $dataArray->users[0]->userId;
+    $jsonFormattedUserData = json_encode($dataArray->users[0]->userData);
+    updateUserIf($userId, $jsonFormattedUserData);
+
+    $boardId = $dataArray->boards[0]->boardId;
+    $jsonFormattedBoardData = json_encode($dataArray->boards[0]->boardData);
+    updateboardIf($boardId, $jsonFormattedBoardData);
+}
+
 
 if (isset($_GET['userId']) && $_GET['userId'] != "") {
     $userId = $_GET['userId'];
@@ -17,7 +32,7 @@ if (isset($_GET['userId']) && $_GET['userId'] != "") {
     } else {
         individualResponse(NULL, NULL, NULL, NULL, NULL, "No Record Found");
     }
-} else {
+} else if(!isset($_POST["update"])){
     returnAllBoards();
 }
 $response = "";
@@ -76,7 +91,7 @@ function returnAllBoards()
         extract($row);
         // individualResponse($boardId, $boardData);
         $ind_item["boardId"] = $boardId;
-        $ind_item["boardData"] = json_decode($userData);
+        $ind_item["boardData"] = json_decode($boardData);
 
         array_push($item, $ind_item);
     }
@@ -100,7 +115,7 @@ function returnAllBoards()
         // individualResponse($columnId, $columnData);
         $ind_item["columnId"] = $columnId;
 
-        $ind_item["columnData"] = json_decode($userData);
+        $ind_item["columnData"] = json_decode($columnData);
 
         array_push($item, $ind_item);
     }
@@ -124,7 +139,7 @@ function returnAllBoards()
         // individualResponse($tagId, $cardData);
         $ind_item["cardId"] = $cardId;
 
-        $ind_item["cardData"] = json_decode($userData);
+        $ind_item["cardData"] = json_decode($cardData);
         array_push($item, $ind_item);
     }
 
@@ -147,7 +162,7 @@ function returnAllBoards()
         // individualResponse($tagId, $tagData);
         $ind_item["tagId"] = $tagId;
 
-        $ind_item["tagData"] = json_decode($userData);
+        $ind_item["tagData"] = json_decode($tagData);
 
         array_push($item, $ind_item);
     }
@@ -171,7 +186,7 @@ function returnAllBoards()
         // individualResponse($commentId, $commentData);
         $ind_item["commentId"] = $commentId;
 
-        $ind_item["commentData"] = json_decode($userData);
+        $ind_item["commentData"] = json_decode($commentData);
 
         array_push($item, $ind_item);
     }

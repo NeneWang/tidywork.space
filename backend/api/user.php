@@ -1,7 +1,7 @@
 <?php
 
 include '../includes/db.php';
-include '../includes/function.php';
+include '../includes/functions.php';
 
 header("Content-Type:application/json");
 
@@ -11,18 +11,8 @@ if (isset($_POST["update"])) {
 
 
     $dataArray = json_decode($update);
-     //print_r($dataArray);
-
-    // echo($dataArray[0]->name);//Syntax to access the data Array Property
-    // echo($dataArray[0]->tables[0]);
-
-    // print_r($dataArray->users[0]);//works
-    // print_r($dataArray->users[0]->userId); //gets userId
-    // print_r($dataArray->users[0]->userData->name); //gets name
-    
     $userId = $dataArray->users[0]->userId;
     $jsonFormattedUserData = json_encode($dataArray->users[0]->userData);
-    print_r($jsonFormattedUserData); //gets json
     updateUserIf($userId, $jsonFormattedUserData);
 }
 
