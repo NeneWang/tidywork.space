@@ -52,8 +52,7 @@ const app = new Vue({
     methods: {
         // ## API
         fetchApi: function () {
-            console.log("Fetching...");
-            axios.get('https://reqres.in/api/users').then( response =>
+            axios.get('http://wngnelson.com/api/tidywork/api/board.php').then( response =>
                 {console.log(response)}
             );
         },
