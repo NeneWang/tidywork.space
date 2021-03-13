@@ -79,7 +79,7 @@ const EXAMPLE_CARD_2 = {
     cardId: 2,
     columnId: 1,
     name: "Market Research",
-    color: "#912D51",
+    color: "#ABC123",
     description: `Have to research the market`,
     deadline: "2021-02-02T23:59",
     priority: "1",
