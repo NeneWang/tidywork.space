@@ -13,7 +13,7 @@ var dummyJson = {
         {
             "userId": "2",
             "userData": {
-                "name": "zeroguy ",
+                "name": "zeroguy",
                 "tables": []
             }
         }

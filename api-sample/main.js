@@ -56,18 +56,33 @@ const app = new Vue({
     methods: {
         // ##API
         fetchApi: function () {
-            axios.get('http://wngnelson.com/api/tidywork/api/board.php').then(response => {
+            axios.get('http://wngnelson.com/api/tidywork/api/board.php').
+                then(response => {
 
-                // ##TODO: make this equivalent to wahtever data you are using
-                console.log(response.data)
-            }
+                    // ##TODO: make this equivalent to wahtever data you are using
+                    console.log(response.data)
+                }
             );
         },
         uploadApi: function (dataToUpload) {
 
-            console.log("We will be posting now this: ");
-            console.log(dataToUpload);
+            console.log("posting the following data: ");           
+            console.log(JSON.stringify(dataToUpload));
+            
+
+            axios.post('http://wngnelson.com/api/tidywork/api/board.php', {
+                update: dataToUpload,
+                
+            }).then((res) => {
+                // console.log(res)
+            });
         },
+
+
+
+
+
+
 
         // helper function that convert javascript date object to ISO string ('YYYY-MM-DDThh:mm')
         javascriptDateObjectToISOString(date) {
