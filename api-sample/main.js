@@ -50,7 +50,8 @@ const app = new Vue({
         }
     },
     methods: {
-        say: function (message) {
+        // ## API
+        fetchApi: function (message) {
             console.log("Fetching...");
             axios.get('https://reqres.in/api/users').then( response =>
                 {console.log(response)}
