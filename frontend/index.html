@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <!-- always put your name in your work -->
+    <meta name="authors" content="Joseph Nagy">
+    <!-- always label your name with a title -->
+    <title>tidywork.space</title>
+    <!-- scale page to fit entire screen, so it properly fills non-desktop devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- DEV-only for easier refreshing: stop the web browser from ever caching this page or its images -->
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <!-- load required Bootstrap and BootstrapVue CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
+    <!-- load Vue followed by BootstrapVue -->
+    <script src="https://unpkg.com/vue@latest/dist/vue.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+    <!-- load the following for BootstrapVueIcons support -->
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue-icons.js"></script>
+    <!-- Link the stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- interaction for this page, defer loading until after page to allow access to DOM elements -->
+    <script defer src="example_data.js"></script>
+    <script defer src="main.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- test value to make sure vue works-->
+        <h1>Test Text: {{testText}} </h1>
+
+        <!-- TODO: page header -->
+        <header>
+
+        </header>
+
+        <!-- tidywork.space board container -->
+        <div class="container">
+            <main>
+                <!-- bootstrap container -->
+                <b-container> 
+                    <!-- single row of taskLists, contains b-cols which contain b-cards -->
+                    <b-row :cols="columns.length">
+                        <b-col
+                            v-for="(column, col) in columns"
+                            :key="col"
+                        > 
+                            <!-- taskList card -->
+                                <b-card
+                                    :title="column.name"     
+                                > 
+                                    <!-- taskList card BODY -->
+                                    <b-card-body>
+                                        <b-row cols="1"> <!-- one column because cards should be stacked inside taskList-->
+                                            <b-col
+                                                v-for="(card, car) in column.cards" 
+                                                :key="car"
+                                            >
+                                                <!-- actual card inside taskList-->
+                                                <b-card 
+                                                    :title="card.name" 
+                                                    :style="{backgroundColor: card.color}"
+                                                >
+                                                    <!-- card details -->
+                                                    <div class="card-content">
+                                                        <p>{{card.description}}</p>
+                                                    </div>
+
+                                                    <!-- card FOOTER -->
+                                                    <b-card-footer> 
+                                                        <!-- modal button to show card details -->
+                                                        <b-button 
+                                                            v-b-modal="'viewCardModal'+col+car" 
+                                                            variant="info" 
+                                                            block>View Card</b-button>
+
+                                                            <!-- modal to view/edit card detials -->
+                                                            <b-modal 
+                                                                :id="'viewCardModal'+col+car" 
+                                                                :title="card.name" 
+                                                                ok-only 
+                                                                ok-title="Close Card">
+
+                                                                <!-- modal CONTENT to view/edit card detials -->
+                                                                <p>HELLO WORLD</p>
+
+                                                                <!-- edit title -->
+                                                                <label><b>Card Title</b></label>
+                                                                <input v-model="columns[col].cards[car].name" style="width: 100%" type="text"></input>
+                                                                <hr />
+                                                                
+                                                                <!-- edit description -->
+                                                                <label><b>Card Description</b></label>
+                                                                <textarea v-model="columns[col].cards[car].description" style="width: 100%" type="text"></textarea>
+                                                                <hr />
+                                                                
+                                                                <!-- edit color -->
+                                                                <label><b>Card Color</b></label>
+                                                                <input v-model="columns[col].cards[car].color" style="width: 100%" type="color"></input>
+                                                                <hr />
+
+                                                                <!-- edit deadline -->
+                                                                <label><b>Card Deadline</b></label>
+                                                                <input v-model="columns[col].cards[car].deadline" style="width: 100%" type="datetime-local"></input>
+                                                                <hr />
+
+                                                                <!-- view comments -->
+                                                                <label><b>Comments</b></label>
+                                                                <ul>
+                                                                    <li v-for="(comment, com) in card.comments" :key="com">
+                                                                        <div>
+                                                                            <p>Comment Timestamp: {{displayDate(comment.timestamp)}}</p>
+                                                                            <p>Comment Description: {{comment.description}}</p>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+
+                                                            </b-modal>  
+                                                    </b-card-footer>
+                                                </b-card>
+                                            </b-col>
+                                        </b-row>
+                                    </b-card-body>
+                                </b-card>
+                        </b-col>    
+
+                    </b-row>
+
+                </b-container>  
+
+            </main>
+
+
+        </div>
+
+
+    </div>  
+</body> 
+</html>
