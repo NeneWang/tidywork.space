@@ -5,6 +5,7 @@
  */
 
 const app = new Vue({
+
     data() {
         return {
             testText: "hello world",
@@ -12,8 +13,8 @@ const app = new Vue({
             columns: EXAMPLE_BOARD_0.columns,
             cardToMoveDestination: null,
             newCard: {
-                cardId: null, 
-                columnId: null, 
+                cardId: null,
+                columnId: null,
                 name: "",
                 color: "",
                 description: "",
@@ -26,8 +27,8 @@ const app = new Vue({
                 showModal: false
             },
             newColumn: {
-                columnId: null, 
-                boardId: null, 
+                columnId: null,
+                boardId: null,
                 name: "",
                 color: "",
                 watch: false,
@@ -37,18 +38,24 @@ const app = new Vue({
                 showModal: false,
             },
             newComment: {
-                commentId: null, 
+                commentId: null,
                 timestamp: "",
                 description: ""
-            }, 
+            },
             newTag: {
-                tagId: null, 
-                name: "", 
+                tagId: null,
+                name: "",
                 color: ""
             }
         }
-    }, 
+    },
     methods: {
+        say: function (message) {
+            console.log("Fetching...");
+            axios.get('https://reqres.in/api/users').then( response =>
+                {console.log(response)}
+            );
+        },
         // helper function that convert javascript date object to ISO string ('YYYY-MM-DDThh:mm')
         javascriptDateObjectToISOString(date) {
             day = date.getDate().toString();
@@ -73,8 +80,8 @@ const app = new Vue({
                 time = dateComponents[2].substring(3);
                 d = [month, day, year].join("/")
                 return d + " @ " + time;
-            } 
-        }, 
+            }
+        },
         // adds comment to card
         createComment(column, card) {
             // prepare comment content
@@ -91,24 +98,24 @@ const app = new Vue({
         createCard(col) {
             // prevent user from creating card without all fields 
             // TODO: improve later to handle blank inputs
-            if (this.newCard.name === "" || this.newCard.description === "" || this.newCard.deadline === "" ) {
+            if (this.newCard.name === "" || this.newCard.description === "" || this.newCard.deadline === "") {
                 window.alert("Please fill in all card fields!");
                 return;
             }
             // create new card using constructor 
-            let newCardToAdd = new Card(this.newCard.cardId, this.newCard.columnId, this.newCard.name, this.newCard.color, this.newCard.description, this.newCard.deadline, this.newCard.priority, this.newCard.tags, [], [],[]);
+            let newCardToAdd = new Card(this.newCard.cardId, this.newCard.columnId, this.newCard.name, this.newCard.color, this.newCard.description, this.newCard.deadline, this.newCard.priority, this.newCard.tags, [], [], []);
             // push new card to the list of column's cards
             this.columns[col].cards.push(newCardToAdd);
             // reset newCard fields using resetNewCard (const in classes.js)
             this.newCard = resetNewCard;
-        }, 
+        },
         createColumn() {
             // create new column using constructor 
             let newColumnToAdd = new Column(this.newColumn.columnId, this.newColumn.boardId, this.newColumn.name, this.newColumn.color, this.newColumn.watch, this.newColumn.cards, this.newColumn.order);
             // push new column to the end of columns 
             this.columns.push(newColumnToAdd);
             // reset newColumn fields 
-            this.newColumn = resetNewColumn; 
+            this.newColumn = resetNewColumn;
         },
         // deletes card from column based on indicies
         deleteCard(column, card) {
@@ -118,7 +125,7 @@ const app = new Vue({
         deleteColumn(column) {
             this.columns.splice(column, 1);
         },
-        deleteComment(column, card, comment){
+        deleteComment(column, card, comment) {
             this.columns[column].cards[card].comments.splice(comment, 1);
         },
         // moves card from one column to another 
@@ -136,7 +143,7 @@ const app = new Vue({
             this.cardToMoveDestination = null;
         },
     }
-}); 
+});
 
 // connect Vue app instance with HTML element with id="app" to display it
 app.$mount('#app');

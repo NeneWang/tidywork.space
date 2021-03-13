@@ -2,6 +2,10 @@
 <html lang="en">
 
 <head>
+
+    <script>
+        console.log("Is this broken?");
+    </script>
     <meta charset="utf-8">
     <!-- always put your name in your work -->
     <meta name="authors" content="Joseph Nagy">
@@ -27,6 +31,15 @@
     <script defer src="classes.js"></script>
     <script defer src="example_data.js"></script>
     <script defer src="main.js"></script>
+
+
+    <!-- ##API AXIOS IMPORTING -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+
+
+
 </head>
 
 <body>
@@ -34,32 +47,28 @@
         <!-- page header -->
         <header>
             <h1>{{currentBoard.name}}</h1>
+            <p></p>
+
+
             <!-- create column modal button -->
-            <b-button 
-                v-b-modal="'newColumnModal'+currentBoard.name" 
-                variant="info" 
-                block>New Column</b-button>
-            
+            <b-button v-b-modal="'newColumnModal'+currentBoard.name" variant="info" block>New Column</b-button>
+
             <!-- create column project modal  -->
-            <b-modal 
-                :id="'newColumnModal'+currentBoard.name"
-                :title="newColumn.name" 
-                ok-only 
-                ok-title="Create List"
+            <b-modal :id="'newColumnModal'+currentBoard.name" :title="newColumn.name" ok-only ok-title="Create List"
                 @ok="createColumn()">
-                
+
                 <!-- actual edit column modal -->
-            
+
                 <!-- column title  -->
                 <label><b>Column Title</b></label>
                 <input v-model="newColumn.name" style="width: 100%" type="text" placeholder="Column Name"></input>
                 <hr />
-            
+
                 <!-- column color  -->
                 <label><b>Column Color</b></label>
                 <input v-model="newColumn.color" style="width: 100%" type="color"></input>
                 <hr />
-            
+
                 <!-- column ordering -->
                 <label><b>Card Ordering</b></label>
                 <select name="cardOrder" id="newCardOrder" v-model="newColumn.order">
@@ -67,8 +76,8 @@
                     <option value="priority">Order by card priority</option>
                     <option value="deadline">Order by card deadline</option>
                 </select>
-            
-            
+
+
             </b-modal>
 
         </header>
@@ -77,206 +86,192 @@
         <div class="container">
             <main>
                 <!-- bootstrap container -->
-                <b-container> 
+                <b-container>
                     <!-- single row of columns, contains b-cols which contain b-cards -->
                     <b-row :cols="columns.length">
-                        <b-col
-                            v-for="(column, col) in columns"
-                            :key="col"
-                        > 
+                        <b-col v-for="(column, col) in columns" :key="col">
                             <!-- column card -->
-                                <b-card
-                                    :title="column.name" 
-                                    :style="{backgroundColor: column.color}"    
-                                > 
-                                    <!-- column card BODY -->
-                                    <b-card-body>
-                                        <b-row cols="1"> <!-- one column because cards should be stacked inside column-->
-                                            <b-col
-                                                v-for="(card, car) in column.cards" 
-                                                :key="car"
-                                            >
-                                                <!-- actual card inside column-->
-                                                <b-card 
-                                                    :title="card.name" 
-                                                    :style="{backgroundColor: card.color}"
-                                                >
-                                                    <!-- card details -->
-                                                    <div class="card-content">
-                                                        <p>{{card.description}}</p>
-                                                    </div>
+                            <b-card :title="column.name" :style="{backgroundColor: column.color}">
+                                <!-- column card BODY -->
+                                <b-card-body>
+                                    <b-row cols="1">
+                                        <!-- one column because cards should be stacked inside column-->
+                                        <b-col v-for="(card, car) in column.cards" :key="car">
+                                            <!-- actual card inside column-->
+                                            <b-card :title="card.name" :style="{backgroundColor: card.color}">
+                                                <!-- card details -->
+                                                <div class="card-content">
+                                                    <p>{{card.description}}</p>
+                                                </div>
 
-                                                    <!-- card FOOTER -->
-                                                    <b-card-footer> 
-                                                        <!-- modal button to show card details -->
-                                                        <b-button 
-                                                            v-b-modal="'viewCardModal'+col+car" 
-                                                            variant="info" 
-                                                            block>View Card</b-button>
+                                                <!-- card FOOTER -->
+                                                <b-card-footer>
+                                                    <!-- modal button to show card details -->
+                                                    <b-button v-b-modal="'viewCardModal'+col+car" variant="info" block>
+                                                        View Card</b-button>
 
-                                                            <!-- modal to view/edit card detials -->
-                                                            <b-modal 
-                                                                :id="'viewCardModal'+col+car" 
-                                                                :title="card.name" 
-                                                                ok-only 
-                                                                ok-title="Close Card">
+                                                    <!-- modal to view/edit card detials -->
+                                                    <b-modal :id="'viewCardModal'+col+car" :title="card.name" ok-only
+                                                        ok-title="Close Card">
 
-                                                                <!-- modal CONTENT to view/edit card detials -->
+                                                        <!-- modal CONTENT to view/edit card detials -->
 
-                                                                <!-- edit title -->
-                                                                <label><b>Card Title</b></label>
-                                                                <input v-model="columns[col].cards[car].name" style="width: 100%" type="text"></input>
-                                                                <hr />
-                                                                
-                                                                <!-- edit description -->
-                                                                <label><b>Card Description</b></label>
-                                                                <textarea v-model="columns[col].cards[car].description" style="width: 100%" type="text"></textarea>
-                                                                <hr />
-                                                                
-                                                                <!-- edit color -->
-                                                                <label><b>Card Color</b></label>
-                                                                <input v-model="columns[col].cards[car].color" style="width: 100%" type="color"></input>
-                                                                <hr />
+                                                        <!-- edit title -->
+                                                        <label><b>Card Title</b></label>
+                                                        <input v-model="columns[col].cards[car].name"
+                                                            style="width: 100%" type="text"></input>
+                                                        <hr />
 
-                                                                <!-- edit deadline -->
-                                                                <label><b>Card Deadline</b></label>
-                                                                <input v-model="columns[col].cards[car].deadline" style="width: 100%" type="datetime-local"></input>
-                                                                <hr />
+                                                        <!-- edit description -->
+                                                        <label><b>Card Description</b></label>
+                                                        <textarea v-model="columns[col].cards[car].description"
+                                                            style="width: 100%" type="text"></textarea>
+                                                        <hr />
 
-                                                                <!-- add comments -->
-                                                                <label><b>Add Comment</b></label>
-                                                                <input placeholder="Comment" v-model="newComment.description" style="width: 100%" type="text"></input>
-                                                                <hr />
-                                                                
-                                                                <b-button variant="info" block @click="createComment(col, car)">Add Comment</b-button>
+                                                        <!-- edit color -->
+                                                        <label><b>Card Color</b></label>
+                                                        <input v-model="columns[col].cards[car].color"
+                                                            style="width: 100%" type="color"></input>
+                                                        <hr />
 
-                                                                <!-- view comments -->
-                                                                <label><b>Comments</b></label>
-                                                                <ul>
-                                                                    <li v-for="(comment, com) in card.comments" :key="com">
-                                                                        <div>
-                                                                            <p>Comment Timestamp: {{displayDate(comment.timestamp)}}</p>
-                                                                            <p>Comment Description: {{comment.description}}</p>
-                                                                            <b-button variant="danger" block @click="deleteComment(col, car, com)">Delete Comment</b-button>
-                                                                        </div>
-                                                                    </li>
-                                                                </ul>
+                                                        <!-- edit deadline -->
+                                                        <label><b>Card Deadline</b></label>
+                                                        <input v-model="columns[col].cards[car].deadline"
+                                                            style="width: 100%" type="datetime-local"></input>
+                                                        <hr />
 
-                                                                <!-- delete card button -->
-                                                                <b-button variant="danger" block @click="deleteCard(col, car)">Delete Card</b-button>
-                                                            </b-modal>  
+                                                        <!-- add comments -->
+                                                        <label><b>Add Comment</b></label>
+                                                        <input placeholder="Comment" v-model="newComment.description"
+                                                            style="width: 100%" type="text"></input>
+                                                        <hr />
 
-                                                            <!-- card FOOTER (cont...) -->
-                                                            <b-button 
-                                                                v-b-modal="'moveCardModal'+col+car" 
-                                                                variant="light" 
-                                                                block>Move Card</b-button>
-                                                            <!-- MODAL allows user to edit card content -->
-                                                            <b-modal 
-                                                                :id="'moveCardModal'+col+car" 
-                                                                :title="'Move ' + card.name" 
-                                                                ok-title="Move Card" 
-                                                                @ok="moveCard(col, car)">
-                                                                <!-- actual move card modal content -->
-                                                            
-                                                                <!-- destination column -->
-                                                                <label><b>Move Card To</b></label>
-                                                                <select name="moveCardToColumn" :id="'moveCardToColumn'+col" v-model="cardToMoveDestination">
-                                                                    <option v-for="(column, c) in columns" :value="c">{{column.name}}</option>
-                                                                </select>
-                                                            </b-modal>
+                                                        <b-button variant="info" block @click="createComment(col, car)">
+                                                            Add Comment</b-button>
+
+                                                        <!-- view comments -->
+                                                        <label><b>Comments</b></label>
+                                                        <ul>
+                                                            <li v-for="(comment, com) in card.comments" :key="com">
+                                                                <div>
+                                                                    <p>Comment Timestamp:
+                                                                        {{displayDate(comment.timestamp)}}</p>
+                                                                    <p>Comment Description: {{comment.description}}</p>
+                                                                    <b-button variant="danger" block
+                                                                        @click="deleteComment(col, car, com)">Delete
+                                                                        Comment</b-button>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+
+                                                        <!-- delete card button -->
+                                                        <b-button variant="danger" block @click="deleteCard(col, car)">
+                                                            Delete Card</b-button>
+                                                    </b-modal>
+
+                                                    <!-- card FOOTER (cont...) -->
+                                                    <b-button v-b-modal="'moveCardModal'+col+car" variant="light" block>
+                                                        Move Card</b-button>
+                                                    <!-- MODAL allows user to edit card content -->
+                                                    <b-modal :id="'moveCardModal'+col+car" :title="'Move ' + card.name"
+                                                        ok-title="Move Card" @ok="moveCard(col, car)">
+                                                        <!-- actual move card modal content -->
+
+                                                        <!-- destination column -->
+                                                        <label><b>Move Card To</b></label>
+                                                        <select name="moveCardToColumn" :id="'moveCardToColumn'+col"
+                                                            v-model="cardToMoveDestination">
+                                                            <option v-for="(column, c) in columns" :value="c">
+                                                                {{column.name}}</option>
+                                                        </select>
+                                                    </b-modal>
 
 
-                                                    </b-card-footer>
-                                                </b-card>
-                                            </b-col>
-                                        </b-row>
-                                    </b-card-body>
+                                                </b-card-footer>
+                                            </b-card>
+                                        </b-col>
+                                    </b-row>
+                                </b-card-body>
 
-                                    <!-- COLUMN card FOOTER -->
-                                    <b-card-footer>
-                                        <!-- button to edit column -->
-                                        <b-button 
-                                            v-b-modal="'editColumnModal'+col" 
-                                            variant="dark" 
-                                            block>View Column</b-button>
-                                    
-                                        <!-- edit column MODAL -->
-                                        <b-modal 
-                                            :id="'editColumnModal'+col" 
-                                            @ok="" 
-                                            @cancel="" 
-                                            title="Edit Column" 
-                                            ok-title="Save Changes">
-                                            <!-- actual edit column modal content -->
+                                <!-- COLUMN card FOOTER -->
+                                <b-card-footer>
+                                    <!-- button to edit column -->
+                                    <b-button v-b-modal="'editColumnModal'+col" variant="dark" block>View Column
+                                    </b-button>
 
-                                            <!-- Column title  -->
-                                            <label><b>List Title</b></label>
-                                            <input v-model="column.name" style="width: 100%" type="text"></input>
-                                            <hr />
+                                    <!-- edit column MODAL -->
+                                    <b-modal :id="'editColumnModal'+col" @ok="" @cancel="" title="Edit Column"
+                                        ok-title="Save Changes">
+                                        <!-- actual edit column modal content -->
 
-                                            <!-- Column color -->
-                                            <label><b>List Color</b></label>
-                                            <input v-model="columns[col].color" style="width: 100%" type="color"></input>
-                                            <hr />
-                                    
-                                            <!-- delete column button -->
-                                            <b-button 
-                                                variant="danger" 
-                                                block 
-                                                @click="deleteColumn(col)">Delete Column</b-button>
-                                        </b-modal>
+                                        <!-- Column title  -->
+                                        <label><b>List Title</b></label>
+                                        <input v-model="column.name" style="width: 100%" type="text"></input>
+                                        <hr />
 
-                                        <!-- COLUMN card FOOTER (CONTINUED...) -->
+                                        <!-- Column color -->
+                                        <label><b>List Color</b></label>
+                                        <input v-model="columns[col].color" style="width: 100%" type="color"></input>
+                                        <hr />
 
-                                        <!-- button to open create card modal  -->
-                                        <b-button v-b-modal="'createCardModal'+col" variant="info" block>Create Card</b-button>
-                                        <!-- create card modal -->
-                                        <b-modal 
-                                            :id="'createCardModal'+col" 
-                                            @ok="createCard(col)" 
-                                            @cancel="resetNewCard()" 
-                                            title="Create New Card" 
-                                            ok-title="Create Card">
+                                        <!-- delete column button -->
+                                        <b-button variant="danger" block @click="deleteColumn(col)">Delete Column
+                                        </b-button>
+                                    </b-modal>
 
-                                            <!-- actual create card modal content -->
+                                    <!-- COLUMN card FOOTER (CONTINUED...) -->
 
-                                            <!-- card title  -->
-                                            <label><b>Card Title</b></label>
-                                            <input v-model="newCard.name" style="width: 100%" type="text"></input>
-                                            <hr />
+                                    <!-- button to open create card modal  -->
+                                    <b-button v-b-modal="'createCardModal'+col" variant="info" block>Create Card
+                                    </b-button>
+                                    <!-- create card modal -->
+                                    <b-modal :id="'createCardModal'+col" @ok="createCard(col)" @cancel="resetNewCard()"
+                                        title="Create New Card" ok-title="Create Card">
 
-                                            <!-- card description  -->
-                                            <label><b>Card Description</b></label>
-                                            <input v-model="newCard.description" style="width: 100%" type="text"></input>
-                                            <hr />
-                                            
-                                            <!-- card color  -->
-                                            <label><b>Card Color</b></label>
-                                            <input v-model="newCard.color" style="width: 100%" type="color"></input>
-                                            <hr />
-                                            
-                                            <!-- card deadline  -->
-                                            <label><b>Card Deadline</b></label>
-                                            <input v-model="newCard.deadline" style="width: 100%" type="datetime-local"></input>
-                                            <hr />
-                                        </b-modal>
+                                        <!-- actual create card modal content -->
 
-                                    
-                                    </b-card-footer>
-                                </b-card>
-                        </b-col>    
+                                        <!-- card title  -->
+                                        <label><b>Card Title</b></label>
+                                        <input v-model="newCard.name" style="width: 100%" type="text"></input>
+                                        <hr />
+
+                                        <!-- card description  -->
+                                        <label><b>Card Description</b></label>
+                                        <input v-model="newCard.description" style="width: 100%" type="text"></input>
+                                        <hr />
+
+                                        <!-- card color  -->
+                                        <label><b>Card Color</b></label>
+                                        <input v-model="newCard.color" style="width: 100%" type="color"></input>
+                                        <hr />
+
+                                        <!-- card deadline  -->
+                                        <label><b>Card Deadline</b></label>
+                                        <input v-model="newCard.deadline" style="width: 100%"
+                                            type="datetime-local"></input>
+                                        <hr />
+                                    </b-modal>
+
+
+                                </b-card-footer>
+                            </b-card>
+                        </b-col>
 
                     </b-row>
 
-                </b-container>  
+                </b-container>
 
             </main>
 
 
         </div>
 
+        <div id="btn-fetch"   v-on:click="say('what')" class="ml-3 btn btn-primary">Test me!</div>
+    </div>
+</body>
 
-    </div>  
-</body> 
+<!-- ##API TESTS -->
+<script src="api-tests.js"></script>
+
+
 </html>
