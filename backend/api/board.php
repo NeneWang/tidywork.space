@@ -21,6 +21,38 @@ if (isset($_POST["update"])) {
         updateUserIf($userId, addslashes($jsonFormattedUserData));
     }
 
+    for ($i = 0; $i < count($dataArray->boards); $i++) {
+        $boardId = $dataArray->boards[$i]->boardId;
+        $jsonFormattedBoardData = json_encode($dataArray->boards[$i]->boardData);
+        updateBoardIf($boardId, addslashes($jsonFormattedBoardData));
+    }
+
+
+    for ($i = 0; $i < count($dataArray->columns); $i++) {
+        $columnId = $dataArray->columns[$i]->columnId;
+        $jsonFormattedColumnData = json_encode($dataArray->columns[$i]->columnData);
+        updatecolumnIf($ColumnId, addslashes($jsonFormattedColumnData));
+    }
+
+
+    for ($i = 0; $i < count($dataArray->cards); $i++) {
+        $cardId = $dataArray->cards[$i]->cardId;
+        $jsonFormattedCardData = json_encode($dataArray->cards[$i]->cardData);
+        updateCardIf($cardId, addslashes($jsonFormattedCardData));
+    }
+
+    for ($i = 0; $i < count($dataArray->tags); $i++) {
+        $tagId = $dataArray->tags[$i]->tagId;
+        $jsonFormattedTagData = json_encode($dataArray->tags[$i]->tagData);
+        updateTagIf($tagId, addslashes($jsonFormattedTagData));
+    }
+
+    for ($i = 0; $i < count($dataArray->comments); $i++) {
+        $commentId = $dataArray->comments[$i]->commentId;
+        $jsonFormattedCommentData = json_encode($dataArray->comments[$i]->commentData);
+        updateCommentIf($commentId, addslashes($jsonFormattedCommentData));
+    }
+
 
 
     // $boardId = $dataArray->boards[0]->boardId;
