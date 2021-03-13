@@ -1,8 +1,50 @@
 /* 
-* Classes + constructors to simplify creating new objects 
+* Classes + constructors to simplify creating new objects, helpful constants to reset object values
 *
 * @authors Joseph Nagy 
 */
+
+// helpful objects used to reset values 
+
+const resetNewCard = {
+    cardId: null,
+    columnId: null,
+    name: "",
+    color: "",
+    description: "",
+    deadline: "",
+    priority: "",
+    tags: [],
+    comments: [],
+    checklists: [],
+    assignedTo: [],
+    showModal: false
+};
+
+const resetNewColumn = {
+    columnId: null,
+    boardId: null,
+    name: "",
+    color: "",
+    watch: false,
+    color: "",
+    cards: [],
+    order: "alphabetical",
+    showModal: false,
+};
+
+const resetNewComment = {
+    commentId: null,
+    timestamp: "",
+    color: ""
+};
+
+const resetNewTag = {
+    tagId: null,
+    name: "",
+    color: ""
+}; 
+
 
 class Tag {
     constructor(tagId, name, color) {
