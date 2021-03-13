@@ -31,7 +31,8 @@ if (isset($_POST["update"])) {
     for ($i = 0; $i < count($dataArray->columns); $i++) {
         $columnId = $dataArray->columns[$i]->columnId;
         $jsonFormattedColumnData = json_encode($dataArray->columns[$i]->columnData);
-        updatecolumnIf($ColumnId, addslashes($jsonFormattedColumnData));
+        // echo($jsonFormattedColumnData);
+        updateColumnIf($columnId, addslashes($jsonFormattedColumnData));
     }
 
 
