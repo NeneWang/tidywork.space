@@ -67,14 +67,15 @@ const app = new Vue({
         uploadApi: function (dataToUpload) {
 
             console.log("posting the following data: ");           
-            console.log(JSON.stringify(dataToUpload));
+            // console.log(JSON.stringify(dataToUpload));
             
 
             axios.post('http://wngnelson.com/api/tidywork/api/board.php', {
                 update: dataToUpload,
                 
             }).then((res) => {
-                // console.log(res)
+                console.log(res);
+                console.log(res["request"]);
             });
         },
 
