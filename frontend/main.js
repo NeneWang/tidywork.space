@@ -9,8 +9,10 @@ const app = new Vue({
         return {
             dummyJson: null,
             jsonData: null, 
+            currentUser: null,
             currentBoard: EXAMPLE_BOARD_0,
             columns: EXAMPLE_BOARD_0.columns,
+            boards: [],
             cardToMoveDestination: null,
             newCard: {
                 cardId: null, 
@@ -85,6 +87,22 @@ const app = new Vue({
                     console.log(res);
                     console.log(res["data"]);
                 });
+        },
+
+        // helper function to map users to their associated board (obects) based on FK (boardId) in user.userData.tables
+        // organizeUsers: {*userId* : [{board}]}
+        organizeUsers(users, boards){
+            let organizeUsers = {};
+            // for each user 
+            for(i=0; i<users.length; i++){
+                // array of boards -> filters for boards associated with users[i]
+                // note: DB set up st userData.tables is array of ints, but board.boardId is a string
+                let userBoards = boards.filter((board) => users[i].userData.tables.includes(parseInt(board.boardId)));
+                // add userId field to organizeUsers object, set equal to userId
+                Vue.set(organizeUsers, users[i].userId, userBoards); 
+            }
+
+            // TODO: set this.boards equal to array of boards based on this.currentUser
         },
 
 
