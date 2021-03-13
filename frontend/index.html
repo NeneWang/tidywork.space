@@ -88,6 +88,36 @@
                                                                 <!-- modal CONTENT to view/edit card detials -->
                                                                 <p>HELLO WORLD</p>
 
+                                                                <!-- edit title -->
+                                                                <label><b>Card Title</b></label>
+                                                                <input v-model="columns[col].cards[car].name" style="width: 100%" type="text"></input>
+                                                                <hr />
+                                                                
+                                                                <!-- edit description -->
+                                                                <label><b>Card Description</b></label>
+                                                                <textarea v-model="columns[col].cards[car].description" style="width: 100%" type="text"></textarea>
+                                                                <hr />
+                                                                
+                                                                <!-- edit color -->
+                                                                <label><b>Card Color</b></label>
+                                                                <input v-model="columns[col].cards[car].color" style="width: 100%" type="color"></input>
+                                                                <hr />
+
+                                                                <!-- edit deadline -->
+                                                                <label><b>Card Deadline</b></label>
+                                                                <input v-model="columns[col].cards[car].deadline" style="width: 100%" type="datetime-local"></input>
+                                                                <hr />
+
+                                                                <!-- view comments -->
+                                                                <label><b>Comments</b></label>
+                                                                <ul>
+                                                                    <li v-for="(comment, com) in card.comments" :key="com">
+                                                                        <div>
+                                                                            <p>Comment Timestamp: {{comment.timestamp}}</p>
+                                                                            <p>Comment Description: {{comment.description}}</p>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
 
                                                             </b-modal>  
                                                     </b-card-footer>
