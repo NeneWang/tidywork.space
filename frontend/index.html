@@ -27,6 +27,14 @@
     <script defer src="classes.js"></script>
     <script defer src="example_data.js"></script>
     <script defer src="main.js"></script>
+
+    <!-- API AXIOS IMPORTING -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    
+    <script src="json-sample.js"></script>
+
 </head>
 
 <body>
@@ -275,6 +283,12 @@
 
 
         </div>
+
+        <!-- TEST BUTTONS for API calls -->
+
+        <div id="btn-fetch" v-on:click="fetchApi()" class="m-3 ml-5 btn btn-primary">Test Fetching</div>
+        
+        <div id="btn-upload" v-on:click="uploadApi(jsonData)" class="m-3 ml-5 btn btn-primary">Test Uploading</div>
 
 
     </div>  

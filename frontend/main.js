@@ -1,13 +1,14 @@
 /*
  * tidywork.space application
  *
- * @authors Joseph Nagy
+ * @authors Joseph Nagy, Nelson Wang
  */
 
 const app = new Vue({
     data() {
         return {
-            testText: "hello world",
+            dummyJson: null,
+            jsonData: null, 
             currentBoard: EXAMPLE_BOARD_0,
             columns: EXAMPLE_BOARD_0.columns,
             cardToMoveDestination: null,
@@ -49,6 +50,46 @@ const app = new Vue({
         }
     }, 
     methods: {
+        // BACKEND functions
+
+        // API fetch function
+        fetchApi() {
+            axios.get('http://wngnelson.com/api/tidywork/api/board.php').
+                then(response => {
+
+                    // ##TODO: make this equivalent to wahtever data you are using
+                    this.jsonData = response.data;
+                }
+                );
+        },
+        // API uplodad function
+        uploadApi(dataToUpload) {
+
+            console.log("posting the following data: ");
+            // console.log(JSON.stringify(dataToUpload));
+
+            const params = new URLSearchParams()
+            params.append('update', JSON.stringify(dataToUpload))
+
+            // var obj = {};
+            // obj["update"] = dataToUpload;
+
+            const config = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }
+
+            axios.post('http://wngnelson.com/api/tidywork/api/board.php',
+                params, config).then((res) => {
+                    console.log(res);
+                    console.log(res["data"]);
+                });
+        },
+
+
+        // FRONTEND functions
+
         // helper function that convert javascript date object to ISO string ('YYYY-MM-DDThh:mm')
         javascriptDateObjectToISOString(date) {
             day = date.getDate().toString();
