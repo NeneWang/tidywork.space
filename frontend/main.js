@@ -78,7 +78,7 @@ const app = new Vue({
         createCard(col) {
             // prevent user from creating card without all fields 
             // TODO: improve later to handle blank inputs
-            if (this.newCard.name === "" || this.newCard.description === "" || this.newCard.deadline === "" || this.newCard.priority === "") {
+            if (this.newCard.name === "" || this.newCard.description === "" || this.newCard.deadline === "" ) {
                 window.alert("Please fill in all card fields!");
                 return;
             }
