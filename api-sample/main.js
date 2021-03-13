@@ -53,7 +53,11 @@ const app = new Vue({
         // ## API
         fetchApi: function () {
             axios.get('http://wngnelson.com/api/tidywork/api/board.php').then( response =>
-                {console.log(response)}
+                {
+
+                    // ##TODO: make this equivalent to wahtever data you are using
+                    console.log(response.data)
+                }
             );
         },
         // helper function that convert javascript date object to ISO string ('YYYY-MM-DDThh:mm')
