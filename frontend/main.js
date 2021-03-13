@@ -90,7 +90,7 @@ const app = new Vue({
         },
 
         // helper function to map users to their associated board (obects) based on FK (boardId) in user.userData.tables
-        // organizeUsers: {*userId* : [{board}]}
+        // organizeUsers: {*userId* : [{board}] }
         organizeUsers(users, boards){
             let organizeUsers = {};
             // for each user 
@@ -98,13 +98,49 @@ const app = new Vue({
                 // array of boards -> filters for boards associated with users[i]
                 // note: DB set up st userData.tables is array of ints, but board.boardId is a string
                 let userBoards = boards.filter((board) => users[i].userData.tables.includes(parseInt(board.boardId)));
-                // add userId field to organizeUsers object, set equal to userId
+                // add userId field to organizeUsers object, set equal to array of boards
                 Vue.set(organizeUsers, users[i].userId, userBoards); 
             }
 
             // TODO: set this.boards equal to array of boards based on this.currentUser
         },
 
+        // helper function to map boards to their associated column (obects) based on FK (boardId) in column.columnData.boardId
+        // organizeBoards: {*boardId* : [{column}] }
+        organizeBoards(boards, columns) {
+            let organizeBoards = {};
+            // for each board 
+            for (i=0; i<boards.length; i++) {
+                // array of columns -> filters for columns associated with boards[i]
+                // note: DB set up st board.boardId is a string, but column.columnData.boardId is an int
+                let boardColumns = columns.filter((column) => column.columnData.boardId === parseInt(boards[i].boardId));
+                // add boardId field to organizeBoards object, set equal to array of columns
+                Vue.set(organizeBoards, boards[i].boardId, boardColumns); 
+            }
+
+            // TODO: set this.columns equal to array of columns based on this.currentBoard
+        },
+
+        // helper function to map columns to their associated card (obects) based on FK (columnId) in card.cardData.columnId
+        // organizeColumns: {*columnId* : [{card}] }
+        organizeColumns(columns, cards){
+            let organizeColumns = {};
+            // for each column
+            for(i=0; i<columns.length; i++){
+                // array of cards -> filters for cards associated with columns[i]
+                // note: DB set up st column.columnId is a string, but card.cardData.columnId is an int
+                let columnCards = cards.filter((card) => card.cardData.columnId === parseInt(columns[i].columnId));
+                // add columnId field to organizeColumns object, set equal to array of cards
+                Vue.set(organizeColumns, columns[i].columnId, columnCards); 
+            }
+
+            // for each column in columns 
+            // (afterthought: I thinkkk this can go inside for loop instead of separate one)
+            // putting it down here for consistency 
+                // TODO: set this.columns[index] equal to organizeColumns[index] 
+        },
+        
+        
 
         // FRONTEND functions
 
@@ -120,7 +156,7 @@ const app = new Vue({
             return [ymd, time].join("T");
         },
         // helper function that takes ISO date('YYYY-MM-DDThh:mm') and returns a display string for dates
-        // TODO: 
+        // TODO: make this cleaner
         displayDate(date) {
             if (date === undefined) {
                 return "undefined time"
