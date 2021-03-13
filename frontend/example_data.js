@@ -10,12 +10,14 @@
 EXAMPLE_TAG_0 = {
     tagId: 1, 
     description: "highPriority",
-    boardId: 1
+    boardId: 1, 
+    color: "#125A11"
 }
 EXAMPLE_TAG_1 = {
     tagId: 2,
     description: "lowPriority",
-    boardId: 1
+    boardId: 1, 
+    color: "#123ABD"
 }
 
 // COMMENTS 
