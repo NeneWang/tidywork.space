@@ -31,11 +31,9 @@
 
 <body>
     <div id="app">
-        <!-- test value to make sure vue works-->
-        <h1>Test Text: {{testText}} </h1>
-
         <!-- page header -->
         <header>
+            <h1>{{currentBoard.name}}</h1>
             <!-- create column modal button -->
             <b-button 
                 v-b-modal="'newColumnModal'+currentBoard.name" 
@@ -158,9 +156,29 @@
 
                                                                 <!-- delete card button -->
                                                                 <b-button variant="danger" block @click="deleteCard(col, car)">Delete Card</b-button>
-
-
                                                             </b-modal>  
+
+                                                            <!-- card FOOTER (cont...) -->
+                                                            <b-button 
+                                                                v-b-modal="'moveCardModal'+col+car" 
+                                                                variant="light" 
+                                                                block>Move Card</b-button>
+                                                            <!-- MODAL allows user to edit card content -->
+                                                            <b-modal 
+                                                                :id="'moveCardModal'+col+car" 
+                                                                :title="'Move ' + card.name" 
+                                                                ok-title="Move Card" 
+                                                                @ok="moveCard(col, car)">
+                                                                <!-- actual move card modal content -->
+                                                            
+                                                                <!-- destination column -->
+                                                                <label><b>Move Card To</b></label>
+                                                                <select name="moveCardToColumn" :id="'moveCardToColumn'+col" v-model="cardToMoveDestination">
+                                                                    <option v-for="(column, c) in columns" :value="c">{{column.name}}</option>
+                                                                </select>
+                                                            </b-modal>
+
+
                                                     </b-card-footer>
                                                 </b-card>
                                             </b-col>
@@ -199,7 +217,6 @@
                                                 variant="danger" 
                                                 block 
                                                 @click="deleteColumn(col)">Delete Column</b-button>
-                                            
                                         </b-modal>
 
                                         <!-- COLUMN card FOOTER (CONTINUED...) -->

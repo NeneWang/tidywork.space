@@ -10,6 +10,7 @@ const app = new Vue({
             testText: "hello world",
             currentBoard: EXAMPLE_BOARD_0,
             columns: EXAMPLE_BOARD_0.columns,
+            cardToMoveDestination: null,
             newCard: {
                 cardId: null, 
                 columnId: null, 
@@ -104,6 +105,20 @@ const app = new Vue({
         // deletes column based on index 
         deleteColumn(column) {
             this.columns.splice(column, 1);
+        },
+        // moves card from one column to another 
+        moveCard(column, card) {
+            // store card object 
+            let cardToMove = this.columns[column].cards[card];
+
+            // push it to destination 
+            this.columns[this.cardToMoveDestination].cards.push(cardToMove);
+
+            // remove card from old column
+            this.deleteCard(column, card);
+
+            // reset fields
+            this.cardToMoveDestination = null;
         },
     }
 }); 
