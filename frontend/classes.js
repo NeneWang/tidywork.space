@@ -23,7 +23,7 @@ class Comment {
 class Card {
     constructor(cardId, columnId, name, color, description, deadline, priority, tags, comments, checklists, assignedTo) {
         this.cardId = cardId; 
-        this.cardId = columnId; 
+        this.columnId = columnId; 
         this.name = name;
         this.color = color;
         this.description = description;
