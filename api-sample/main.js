@@ -4,11 +4,15 @@
  * @authors Joseph Nagy
  */
 
+// ##API
+
+
 const app = new Vue({
 
     data() {
         return {
-            testText: "hello world",
+            testText: "This is just me playing with Vue",
+            dummyData: dummyJson,
             currentBoard: EXAMPLE_BOARD_0,
             columns: EXAMPLE_BOARD_0.columns,
             cardToMoveDestination: null,
@@ -52,14 +56,19 @@ const app = new Vue({
     methods: {
         // ## API
         fetchApi: function () {
-            axios.get('http://wngnelson.com/api/tidywork/api/board.php').then( response =>
-                {
+            axios.get('http://wngnelson.com/api/tidywork/api/board.php').then(response => {
 
-                    // ##TODO: make this equivalent to wahtever data you are using
-                    console.log(response.data)
-                }
+                // ##TODO: make this equivalent to wahtever data you are using
+                console.log(response.data)
+            }
             );
         },
+        uploadApi: function (dataToUpload) {
+
+            console.log("We will be posting now this: ");
+            console.log(dataToUpload);
+        },
+
         // helper function that convert javascript date object to ISO string ('YYYY-MM-DDThh:mm')
         javascriptDateObjectToISOString(date) {
             day = date.getDate().toString();

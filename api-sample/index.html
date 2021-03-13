@@ -37,6 +37,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
+    <script src="json-sample.js" ></script>
 
 
 
@@ -46,7 +47,7 @@
     <div id="app">
         <!-- page header -->
         <header>
-            <h1>{{currentBoard.name}}</h1>
+            <h1>{{testText}}</h1>
             <p></p>
 
 
@@ -267,6 +268,8 @@
         </div>
 
         <div id="btn-fetch"   v-on:click="fetchApi()" class="m-3 ml-5 btn btn-primary">Test Fetching</div>
+        
+        <div id="btn-fetch"   v-on:click="uploadApi(dummyData)" class="m-3 ml-5 btn btn-primary">Test Uploading</div>
     </div>
 </body>
 
