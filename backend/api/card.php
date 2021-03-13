@@ -15,24 +15,67 @@ if (isset($_POST["update"])) {
         $jsonFormattedCardData = json_encode($dataArray->cards[$i]->cardData);
         updateCardIf($cardId, addslashes($jsonFormattedCardData));
     }
+}
+
+if (isset($_GET["completedCardId"])) {
+    extract($_GET);
+    // Then go to the make tthe id ofCompletedCardId into +1 in the columnId
+    // Get and update based on the card ID
+    $query = "SELECT * FROM `cards` WHERE cardId=$completedCardId";
+    $result = mysqli_query(
+        $connection,
+        $query
+    );
+
+
+    $ind_item = array();
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_array($result);
+        $ind_item["cardId"] = $cardId;
+        $ind_item["cardData"] = json_decode($cardData);
+        
+        $newColumnId = $ind_item["cardData"]["columnId"];
+        $newColumnId = $newColumnId +1;
+        $ind_item["cardData"]["columnId"] = $newColumnId;
+
+    }
+    
+
+    // Now parse it and edit it here
+    echo json_encode($ind_item);
+    echo ("That's the completed Card: ". $completedCardId);
+    echo($query);
+
 
 }
 
 
-if (isset($_GET['cardId']) && $_GET['cardId'] != "") {
+if (isset($_GET['cardId']) ) {
     $cardId = $_GET['cardId'];
     $result = mysqli_query(
         $connection,
         "SELECT * FROM `cards` WHERE cardId=$cardId"
     );
+
+
+    $item = array();
+    $ind_item = array();
     if (mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_array($result);
         extract($row);
-        individualResponse($cardId, $cardData);
+
+        $ind_item["cardId"] = $cardId;
+        $ind_item["cardData"] = json_decode($cardData);
+
+        echo json_encode($ind_item);
+
+
+
+        // individualResponse($cardId, $cardData);
     } else {
         individualResponse(NULL, NULL, NULL, NULL, NULL, "No Record Found");
     }
-} else if (!isset($_POST["update"])) {
+} else if ( !isset($_POST["update"]) or !isset($_GET["completedCardId"]) ) {
     returnAllCards();
 }
 
