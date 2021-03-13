@@ -1,6 +1,8 @@
 <?php
 
 include '../includes/db.php';
+include '../includes/function.php';
+
 header("Content-Type:application/json");
 
 if (isset($_POST["update"])) {
@@ -24,15 +26,7 @@ if (isset($_POST["update"])) {
     updateUserIf($userId, $jsonFormattedUserData);
 }
 
-function updateUserIf($userId, $userData)
-{
-    global $connection;
-    $query = "INSERT INTO users (userId, userData) VALUES ($userId, '$userData') ON DUPLICATE KEY UPDATE userData='$userData' ";
 
-    // echo($query);
-
-    $update_query = mysqli_query($connection, $query);
-}
 
 
 
