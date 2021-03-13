@@ -20,7 +20,6 @@ if (isset($_GET['userId']) && $_GET['userId'] != "") {
 
 }else{
     returnAllUsers();
-    
 }
 
 function returnAllUsers(){

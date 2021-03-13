@@ -46,6 +46,7 @@ function returnAllBoards()
     $ind_item = array();
 
     while ($row = mysqli_fetch_assoc($result)) {
+              $ind_item = array();
 
         $ind_item = array();
 
@@ -71,6 +72,7 @@ function returnAllBoards()
     $ind_item = array();
 
     while ($row = mysqli_fetch_assoc($result)) {
+              $ind_item = array();
         extract($row);
         // individualResponse($boardId, $boardData);
         $ind_item["boardId"] = $boardId;
@@ -93,6 +95,7 @@ function returnAllBoards()
     $ind_item = array();
 
     while ($row = mysqli_fetch_assoc($result)) {
+              $ind_item = array();
         extract($row);
         // individualResponse($columnId, $columnData);
         $ind_item["columnId"] = $columnId;
@@ -116,11 +119,12 @@ function returnAllBoards()
     $ind_item = array();
 
     while ($row = mysqli_fetch_assoc($result)) {
+        $ind_item = array();
         extract($row);
-        // individualResponse($cardId, $cardData);
+        // individualResponse($tagId, $cardData);
         $ind_item["cardId"] = $cardId;
-        array_push($ind_item, json_decode($cardData));
 
+        array_push($ind_item, json_decode($cardData));
         array_push($item, $ind_item);
     }
 
@@ -138,6 +142,7 @@ function returnAllBoards()
     $ind_item = array();
 
     while ($row = mysqli_fetch_assoc($result)) {
+              $ind_item = array();
         extract($row);
         // individualResponse($tagId, $tagData);
         $ind_item["tagId"] = $tagId;
@@ -161,6 +166,7 @@ function returnAllBoards()
     $ind_item = array();
 
     while ($row = mysqli_fetch_assoc($result)) {
+              $ind_item = array();
         extract($row);
         // individualResponse($commentId, $commentData);
         $ind_item["commentId"] = $commentId;
