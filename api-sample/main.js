@@ -83,9 +83,7 @@ const app = new Vue({
 
 
             axios.post('http://wngnelson.com/api/tidywork/api/board.php',
-                params
-
-                , config).then((res) => {
+                params, config).then((res) => {
                     console.log(res);
                     console.log(res["data"]);
                 });
