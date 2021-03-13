@@ -89,9 +89,9 @@ const app = new Vue({
                 });
         },
 
-        // helper function to map users to their associated board (obects) based on FK (boardId) in user.userData.tables
+        // helper function to map users to their associated board (objects) based on FK (boardId) in user.userData.tables
         // organizeUsers: {*userId* : [{board}] }
-        organizeUsers(users, boards){
+        mapUsersToBoards(users, boards){
             let organizeUsers = {};
             // for each user 
             for(i=0; i<users.length; i++){
@@ -105,9 +105,9 @@ const app = new Vue({
             // TODO: set this.boards equal to array of boards based on this.currentUser
         },
 
-        // helper function to map boards to their associated column (obects) based on FK (boardId) in column.columnData.boardId
+        // helper function to map boards to their associated column (objects) based on FK (boardId) in column.columnData.boardId
         // organizeBoards: {*boardId* : [{column}] }
-        organizeBoards(boards, columns) {
+        mapBoardsToColumns(boards, columns) {
             let organizeBoards = {};
             // for each board 
             for (i=0; i<boards.length; i++) {
@@ -121,9 +121,9 @@ const app = new Vue({
             // TODO: set this.columns equal to array of columns based on this.currentBoard
         },
 
-        // helper function to map columns to their associated card (obects) based on FK (columnId) in card.cardData.columnId
+        // helper function to map columns to their associated card (objects) based on FK (columnId) in card.cardData.columnId
         // organizeColumns: {*columnId* : [{card}] }
-        organizeColumns(columns, cards){
+        mapColumnsToCards(columns, cards){
             let organizeColumns = {};
             // for each column
             for(i=0; i<columns.length; i++){
@@ -140,7 +140,7 @@ const app = new Vue({
                 // TODO: set this.columns[index] equal to organizeColumns[index] 
         },
         
-        
+
 
         // FRONTEND functions
 
