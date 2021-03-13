@@ -69,7 +69,7 @@ const EXAMPLE_CARD_1 = {
     deadline: "2021-02-02T23:59",
     priority: "1",
     tags: [EXAMPLE_TAG_0, EXAMPLE_TAG_1],
-    comments: EXAMPLE_COMMENT_2,
+    comments: [EXAMPLE_COMMENT_2],
     checklists: [],
     asignedTo: [],
     showModal: false
@@ -84,7 +84,7 @@ const EXAMPLE_CARD_2 = {
     deadline: "2021-02-02T23:59",
     priority: "1",
     tags: [EXAMPLE_TAG_0, EXAMPLE_TAG_1],
-    comments: EXAMPLE_COMMENT_2,
+    comments: [EXAMPLE_COMMENT_2],
     checklists: [],
     asignedTo: [],
     showModal: false
@@ -99,7 +99,7 @@ const EXAMPLE_CARD_3 = {
     deadline: "2021-02-02T23:59",
     priority: "1",
     tags: [EXAMPLE_TAG_0, EXAMPLE_TAG_1],
-    comments: EXAMPLE_COMMENT_2,
+    comments: [EXAMPLE_COMMENT_2],
     checklists: [],
     asignedTo: [],
     showModal: false
