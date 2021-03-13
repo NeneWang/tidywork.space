@@ -10,6 +10,41 @@ const app = new Vue({
             testText: "hello world",
             currentBoard: EXAMPLE_BOARD_0,
             columns: EXAMPLE_BOARD_0.columns,
+            newCard: {
+                cardId: null, 
+                columnId: null, 
+                name: "",
+                color: "",
+                description: "",
+                deadline: "",
+                priority: "",
+                tags: [],
+                comments: [],
+                checklists: [],
+                assignedTo: [],
+                showModal: false
+            },
+            newColumn: {
+                columnId: null, 
+                boardId: null, 
+                name: "",
+                color: "",
+                watch: false,
+                color: "",
+                cards: [],
+                order: "alphabetical",
+                showModal: false,
+            },
+            newComment: {
+                commentId: null, 
+                timestamp: "",
+                color: ""
+            }, 
+            newTag: {
+                tagId: null, 
+                name: "", 
+                color: ""
+            }
         }
     }, 
     methods: {
@@ -38,7 +73,7 @@ const app = new Vue({
                 d = [month, day, year].join("/")
                 return d + " @ " + time;
             }
-        }, 
+        }
     }
 }); 
 
