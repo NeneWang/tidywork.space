@@ -27,10 +27,9 @@ if (isset($_POST["update"])) {
 function updateUserIf($userId, $userData)
 {
     global $connection;
-    $query = "UPDATE users SET userData = '$userData' WHERE userId = $userId";
-    $query = "INSERT INTO users  (userId, userData) VALUES ($userId, $userData) ON DUPLICATE KEY UPDATE userData=VALUES(userData) ";
+    $query = "INSERT INTO users (userId, userData) VALUES ($userId, '$userData') ON DUPLICATE KEY UPDATE userData='$userData' ";
 
-    echo($query);
+    // echo($query);
 
     $update_query = mysqli_query($connection, $query);
 }
