@@ -7,7 +7,10 @@
 const app = new Vue({
     data() {
         return {
-            testText: "hello world"
+            testText: "hello world", 
+            currentProject: EXAMPLE_PROJECT_0,
+            taskLists: EXAMPLE_PROJECT_0.taskLists,
+            cards: EXAMPLE_PROJECT_0.cards
         }
     }
 }); 
