@@ -118,6 +118,9 @@ const app = new Vue({
         deleteColumn(column) {
             this.columns.splice(column, 1);
         },
+        deleteComment(column, card, comment){
+            this.columns[column].cards[card].comments.splice(comment, 1);
+        },
         // moves card from one column to another 
         moveCard(column, card) {
             // store card object 
