@@ -158,6 +158,42 @@
                                             <!-- TODO: delete column button -->
                                             
                                         </b-modal>
+
+                                        <!-- COLUMN card FOOTER (CONTINUED...) -->
+
+                                        <!-- button to open create card modal  -->
+                                        <b-button v-b-modal="'createCardModal'+col" variant="info" block>Create Card</b-button>
+                                        <!-- create card modal -->
+                                        <b-modal 
+                                            :id="'createCardModal'+col" 
+                                            @ok="createCard(col)" 
+                                            @cancel="resetNewCard()" 
+                                            title="Create New Card" 
+                                            ok-title="Create Card">
+
+                                            <!-- actual create card modal content -->
+
+                                            <!-- card title  -->
+                                            <label><b>Card Title</b></label>
+                                            <input v-model="newCard.name" style="width: 100%" type="text"></input>
+                                            <hr />
+
+                                            <!-- card description  -->
+                                            <label><b>Card Description</b></label>
+                                            <input v-model="newCard.description" style="width: 100%" type="text"></input>
+                                            <hr />
+                                            
+                                            <!-- card color  -->
+                                            <label><b>Card Color</b></label>
+                                            <input v-model="newCard.color" style="width: 100%" type="color"></input>
+                                            <hr />
+                                            
+                                            <!-- card deadline  -->
+                                            <label><b>Card Deadline</b></label>
+                                            <input v-model="newCard.deadline" style="width: 100%" type="datetime-local"></input>
+                                            <hr />
+                                        </b-modal>
+
                                     
                                     </b-card-footer>
                                 </b-card>
