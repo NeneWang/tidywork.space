@@ -1,6 +1,7 @@
 #include <Elegoo_GFX.h>                   // Core graphics library
 #include <Elegoo_TFTLCD.h>                // Hardware-specific library
-#include <TouchScreen.h>                  // Touch Support
+#include <TouchScreen.h> //// Touch Support  
+#include <TimerOne.h>
 
 //CONFIG
 const int COUNTER_MAX = 25;
@@ -15,10 +16,10 @@ const int COUNTER_MAX = 25;
 #define TS_MINY 120
 #define TS_MAXX 150
 #define TS_MAXY 940
-#define YP A3                             
-#define XM A2                            
-#define YM 9                             
-#define XP 8                              
+#define YP A3
+#define XM A2
+#define YM 9
+#define XP 8
 
 TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
 
@@ -32,22 +33,35 @@ TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
 #define YELLOW  0xFFE0
 #define WHITE   0xFFFF
 
-#define LCD_CS A3                         
-#define LCD_CD A2                         
-#define LCD_WR A1                         
-#define LCD_RD A0                         
-#define LCD_RESET A4 
+#define LCD_CS A3
+#define LCD_CD A2
+#define LCD_WR A1
+#define LCD_RD A0
+#define LCD_RESET A4
 
-                     
+
 Elegoo_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
 
 
-//variables
+//##variables
+
 long counterSegs = 0, timerSegs = 0;
+String cardName - "sample card", tableName = "Doing", timerText = "";
+
 
 
 void setup() {
-  // put your setup code here, to run once:
+  Serial.begin(9600);
+  //Timer One     
+  Timer1.initialize (1000);
+  Timer1.attachInterrupt(timerOne);
+
+  //Setup touchScreen
+  tft.reset();
+  tft.begin(0x9341);
+  fillScreen();
+
+
 
 }
 
