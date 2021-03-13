@@ -11,9 +11,13 @@ if (isset($_POST["update"])) {
 
 
     $dataArray = json_decode($update);
-    $userId = $dataArray->users[0]->userId;
-    $jsonFormattedUserData = json_encode($dataArray->users[0]->userData);
-    updateUserIf($userId, $jsonFormattedUserData);
+
+    for ($i = 0; $i < count($dataArray->users); $i++) {
+        $userId = $dataArray->users[$i]->userId;
+        $jsonFormattedUserData = json_encode($dataArray->users[$i]->userData);
+        updateUserIf($userId, addslashes($jsonFormattedUserData));
+    }
+
 }
 
 
