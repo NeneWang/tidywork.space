@@ -101,6 +101,10 @@ const app = new Vue({
         deleteCard(column, card) {
             this.columns[column].cards.splice(card, 1);
         },
+        // deletes column based on index 
+        deleteColumn(column) {
+            this.columns.splice(column, 1);
+        },
     }
 }); 
 

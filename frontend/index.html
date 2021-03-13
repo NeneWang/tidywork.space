@@ -194,7 +194,11 @@
                                             <input v-model="columns[col].color" style="width: 100%" type="color"></input>
                                             <hr />
                                     
-                                            <!-- TODO: delete column button -->
+                                            <!-- delete column button -->
+                                            <b-button 
+                                                variant="danger" 
+                                                block 
+                                                @click="deleteColumn(col)">Delete Column</b-button>
                                             
                                         </b-modal>
 
