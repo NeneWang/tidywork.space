@@ -53,7 +53,7 @@ function returnAllBoards()
         extract($row);
         // individualResponse($userId, $userData);
         $ind_item["userId"] = $userId;
-        array_push($ind_item, json_decode($userData));
+        $ind_item["userData"] = json_decode($userData);
 
         array_push($item, $ind_item);
     }
@@ -76,7 +76,7 @@ function returnAllBoards()
         extract($row);
         // individualResponse($boardId, $boardData);
         $ind_item["boardId"] = $boardId;
-        array_push($ind_item, json_decode($boardData));
+        $ind_item["boardData"] = json_decode($userData);
 
         array_push($item, $ind_item);
     }
@@ -100,7 +100,7 @@ function returnAllBoards()
         // individualResponse($columnId, $columnData);
         $ind_item["columnId"] = $columnId;
 
-        array_push($ind_item, json_decode($columnData));
+        $ind_item["columnData"] = json_decode($userData);
 
         array_push($item, $ind_item);
     }
@@ -124,7 +124,7 @@ function returnAllBoards()
         // individualResponse($tagId, $cardData);
         $ind_item["cardId"] = $cardId;
 
-        array_push($ind_item, json_decode($cardData));
+        $ind_item["cardData"] = json_decode($userData);
         array_push($item, $ind_item);
     }
 
@@ -147,7 +147,7 @@ function returnAllBoards()
         // individualResponse($tagId, $tagData);
         $ind_item["tagId"] = $tagId;
 
-        array_push($ind_item, json_decode($tagData));
+        $ind_item["tagData"] = json_decode($userData);
 
         array_push($item, $ind_item);
     }
@@ -171,7 +171,7 @@ function returnAllBoards()
         // individualResponse($commentId, $commentData);
         $ind_item["commentId"] = $commentId;
 
-        array_push($ind_item, json_decode($commentData));
+        $ind_item["commentData"] = json_decode($userData);
 
         array_push($item, $ind_item);
     }
