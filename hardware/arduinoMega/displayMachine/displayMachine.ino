@@ -96,11 +96,11 @@ void iterateEverySecond() {
 void refreshScreen() {
   pinModeWriter();
   paintAllBlack();
-  
-  
+
+
   paintButtons();
   refreshDigits();
-  
+
   pinModeReader();
 
 }
@@ -108,7 +108,7 @@ void refreshScreen() {
 void refreshDigits() {
   pinModeWriter();
   paintDigitsBlack();
-  
+
   printDigits();
 
 
@@ -138,7 +138,7 @@ void paintAllBlack() {
 
 void paintDigitsBlack() {
 
-  tft.fillRect(SCREEN_WIDTH/2, 0, SCREEN_WIDTH, SCREEN_HEIGHT / 2, BLACK);
+  tft.fillRect(SCREEN_WIDTH / 2, 0, SCREEN_WIDTH, SCREEN_HEIGHT / 2, BLACK);
 }
 
 void printDigits() {
@@ -183,7 +183,9 @@ void paintButtons() {
 
 }
 
-
+String getTimeInMins(int segs) {
+  return (String)((int) segs / 60) + ":" + ((String)((int)segs % 60));
+}
 void printCard() {
   String message = "Card: ";
   locateAndPrint( message, SCREEN_WIDTH * 1 / 12, SCREEN_HEIGHT * 1 / 6, 2);
@@ -200,14 +202,14 @@ void printColumn() {
 void printTimer() {
   String message = "Timer: ";
   locateAndPrint( message, SCREEN_WIDTH * 1 / 12, SCREEN_HEIGHT * 5 / 18, 2);
-  locateAndPrint( (String)timerSegs, SCREEN_WIDTH * 13 / 24, SCREEN_HEIGHT * 5 / 18, 2);
+  locateAndPrint( getTimeInMins(timerSegs), SCREEN_WIDTH * 13 / 24, SCREEN_HEIGHT * 5 / 18, 2);
 }
 
 
 void printCounter() {
   String message = "Counter: ";
   locateAndPrint( message, SCREEN_WIDTH * 1 / 12, SCREEN_HEIGHT * 1 / 3, 2);
-  locateAndPrint( (String)counterSegs, SCREEN_WIDTH * 13 / 24, SCREEN_HEIGHT * 1 / 3, 2);
+  locateAndPrint( getTimeInMins(counterSegs), SCREEN_WIDTH * 13 / 24, SCREEN_HEIGHT * 1 / 3, 2);
 }
 
 void locateAndPrint(String text, double x, double y, double size) {
