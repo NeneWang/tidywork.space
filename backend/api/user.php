@@ -3,6 +3,8 @@
 include '../includes/db.php';
 include '../includes/functions.php';
 
+
+$userId = 0;
 header("Content-Type:application/json");
 
 if (isset($_POST["update"])) {
@@ -35,9 +37,118 @@ if (isset($_GET['userId']) && $_GET['userId'] != "") {
     } else {
         individualResponse(NULL, NULL, NULL, NULL, NULL, "No Record Found");
     }
-} else if (!isset($_POST["update"])) {
-    returnAllUsers();
 }
+
+if (isset($_GET["newCard"])) {
+    // Get the newCards data and add +1;
+    $metaArray = array();
+    extract($_GET); //extracts userId
+    $query = "SELECT * FROM `meta` WHERE metaUserId=$userId";
+    $result = mysqli_query(
+        $connection,
+        $query
+    );
+
+    
+    $item = array();
+    $ind_item = array();
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        $ind_item = array();
+
+
+        extract($row);
+        // individualResponse($userId, $userData);
+        $ind_item["metaId"] = $metaId;
+        $ind_item["metaData"] = json_decode($metaData);
+
+        array_push($item, $ind_item);
+    }
+
+    // print_r($item);
+
+    $item[3]["metaData"]->cards = $item[3]["metaData"]->cards+1;
+
+    print_r($item[3]["metaData"]->cards);
+    
+    $jsonFormattedUserData = json_encode($item[3]["metaData"]);
+    updatemetaIf($metaId, addslashes($jsonFormattedUserData), 0);
+
+}
+
+
+if (isset($_GET["updateTime"])) {
+    // Get the newCards data and add +1;
+    extract($_GET); //extracts userId
+    $metaArray = array();
+    extract($_GET); //extracts userId
+    $query = "SELECT * FROM `meta` WHERE metaUserId=$userId";
+    $result = mysqli_query(
+        $connection,
+        $query
+    );
+
+    
+    $item = array();
+    $ind_item = array();
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        $ind_item = array();
+
+
+        extract($row);
+        // individualResponse($userId, $userData);
+        $ind_item["metaId"] = $metaId;
+        $ind_item["metaData"] = json_decode($metaData);
+
+        array_push($item, $ind_item);
+    }
+
+    // print_r($item);
+
+
+    print_r($item[3]["metaData"]);
+    $item[3]["metaData"]->isTracking = !$item[3]["metaData"]->isTracking;
+ !   $jsonFormattedUserData = json_encode($item[3]["metaData"]);
+    updatemetaIf($metaId, addslashes($jsonFormattedUserData), 0);
+
+}
+
+
+
+if (isset($_GET["meta"])) {
+    extract($_GET); //extracts userId
+    $metaArray = array();
+    $query = "SELECT * FROM `meta` WHERE metaUserId=$userId";
+    $result = mysqli_query(
+        $connection,
+        $query
+    );
+
+    
+    $item = array();
+    $ind_item = array();
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        $ind_item = array();
+
+
+        extract($row);
+        // individualResponse($userId, $userData);
+        $ind_item["metaId"] = $metaId;
+        $ind_item["metaData"] = json_decode($metaData);
+
+        array_push($item, $ind_item);
+    }
+
+    $responseArray["meta"] = $item;
+    // print_r($item);
+
+
+    echo(json_encode($responseArray));
+
+}
+
 
 
 

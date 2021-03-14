@@ -78,5 +78,16 @@ function updateCommentIf($commentId, $commentData)
 }
 
 
+function updatemetaIf($metaId, $metaData, $metaUserId)
+{
+    global $connection;
+    $query = "INSERT INTO meta (metaId, metaData, metaUserId) VALUES ($metaId, '$metaData', $metaUserId) ON DUPLICATE KEY UPDATE metaData='$metaData' ";
+
+    // echo($query);
+
+    $update_query = mysqli_query($connection, $query);
+}
+
+
 
 ?>
