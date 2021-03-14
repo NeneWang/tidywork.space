@@ -10,10 +10,14 @@ const char* password = "1010101010";
 int workingColumn = 2;
 int newCards = 0;
 
-#define SUC  D5
-#define SUT  D6
+int countTrueCard = 0;
+int countTrueTime = 0;
+int countRep = 0;
 
-boolean flagUpdateCard = false, prevflagUpdateCard = !flagUpdateCard, flagUpdateTime = false, prevflagUpdateTime = !flagUpdateTime;
+#define SUC  D5
+#define SUT  D7
+
+boolean flagUpdateCard = false, prevflagUpdateCard = flagUpdateCard, flagUpdateTime = false, prevflagUpdateTime = flagUpdateTime;
 
 HTTPClient http;
 
@@ -41,18 +45,20 @@ void loop() {
 
   flagUpdateCard = digitalRead(SUC);
   flagUpdateTime = digitalRead(SUT);
-
-
+  countTrueCard += flagUpdateCard;
+  Serial.print(flagUpdateTime);
+  countTrueTime += flagUpdateTime;
+  countRep++;
   confirmUpdate();
 
-  delay(100);
+  delay(200);
 }
 
 void getCardsData() {
   if (WiFi.status() == WL_CONNECTED) { //Check WiFi connection status
 
 
-    
+
     http.begin("http://wngnelson.com/api/tidywork/api/card.php");
     int httpCode = http.GET();
 
@@ -92,16 +98,36 @@ int getFirstCardIndex(DynamicJsonDocument doc) {
 
 void confirmUpdate() {
   //If this is on, then add the newCards count;
-  updateUserData()
+  if (countRep > 4) {
+    //    updateUserCard();
+    updateUserTime();
+
+
+
+    countRep = 0;
+    countTrueTime = 0;
+    countTrueCard = 0;
+  }
+
+
+
+
 }
 
 
 
 
 
-void updateUserData() {
+void updateUserCard() {
+  flagUpdateCard = countTrueCard > 2 ? 1 : 0;
+  Serial.println("Output countTrueCard:" + (String)countTrueCard);
+
   if (flagUpdateCard != prevflagUpdateCard) {
+    Serial.println("Output flagUpdate Card:" + (String)flagUpdateCard);
+    Serial.println("Output flagUpdate Prev Card:" + (String)prevflagUpdateCard);
+    Serial.println("Output countTrueCard:" + (String)countTrueCard);
     if (flagUpdateCard) {
+      Serial.println("ng weapons");
 
       http.begin("http://wngnelson.com/api/tidywork/api/user.php?newCard");
       int httpCode = http.GET();
@@ -113,9 +139,41 @@ void updateUserData() {
         deserializeJson(doc, payload);
 
         newCards = 0;
-        flagUpdateCard = prevflagUpdateCard;
+
       }
+
     }
+    prevflagUpdateCard = flagUpdateCard;
+  }
+}
+
+
+void updateUserTime() {
+  flagUpdateTime = countTrueTime > 2 ? 1 : 0;
+  Serial.println("Output countTrueTime:" + (String)countTrueTime);
+
+  if (flagUpdateTime != prevflagUpdateTime) {
+    Serial.println("Output flagUpdate Time:" + (String)flagUpdateTime);
+    Serial.println("Output flagUpdate Prev Time:" + (String)prevflagUpdateTime);
+    Serial.println("Output countTrueTime:" + (String)countTrueTime);
+    if (flagUpdateTime) {
+      Serial.println("ng weapons");
+
+      http.begin("http://wngnelson.com/api/tidywork/api/user.php?newCard");
+      int httpCode = http.GET();
+      if (httpCode > 0) { //Check the returning code
+        Serial.println(flagUpdateCard);
+
+        String payload = http.getString();   //Get the request response payload
+        DynamicJsonDocument doc(8192);
+        deserializeJson(doc, payload);
+
+        newCards = 0;
+
+      }
+
+    }
+    prevflagUpdateTime = flagUpdateTime;
   }
 }
 
