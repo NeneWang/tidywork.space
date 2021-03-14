@@ -43,17 +43,26 @@
         <header>
             <h1 class="title">{{currentBoard.name}}</h1>
 
-
             <div class="edit-board-buttons">
-                <!-- EDIT BOARD b-button-group -->
-                <b-button-group>
-                    <!-- select current board modal button -->
-                    <b-button v-b-modal="'switchBoardModal'+currentBoard.name" variant="info">Switch Boards</b-button>
-                    <!-- create new board modal button -->
-                    <b-button v-b-modal="'newBoardModal'+currentBoard.name" variant="info">New Board</b-button>
-                    <!-- create column modal button -->
-                    <b-button v-b-modal="'newColumnModal'+currentBoard.name" variant="info">New Column</b-button>
-                </b-button-group>
+                <!-- EDIT BOARD b-dropdown -->
+                <b-dropdown boundary="window" text="Edit Board">
+                    <div class="mx-3 my-3">
+                        <ul>
+                            <li>
+                                <!-- select current board modal button -->
+                                <b-button v-b-modal="'switchBoardModal'+currentBoard.name" variant="info">Switch Boards</b-button>
+                            </li>
+                            <li>
+                                <!-- create new board modal button -->
+                                <b-button v-b-modal="'newBoardModal'+currentBoard.name" variant="info">New Board</b-button>
+                            </li>
+                            <li>
+                                <!-- create column modal button -->
+                                <b-button v-b-modal="'newColumnModal'+currentBoard.name" variant="info">New Column</b-button>
+                            </li>
+                        </ul>
+                    </div>
+                </b-dropdown>
             </div> 
 
             <!-- select current board -->
@@ -151,6 +160,7 @@
                                 <b-card
                                     :title="column.name" 
                                     :style="{backgroundColor: column.color}"    
+                                    class="column-card"
                                 > 
                                     <!-- column card BODY -->
                                     <b-card-body>
@@ -163,19 +173,37 @@
                                                 <b-card 
                                                     :title="card.name" 
                                                     :style="{backgroundColor: card.color}"
+                                                    class="card-card"
                                                 >
-                                                    <!-- card details -->
-                                                    <div class="card-content">
-                                                        <p>{{card.description}}</p>
-                                                    </div>
 
                                                     <!-- card FOOTER -->
                                                     <b-card-footer> 
-                                                        <!-- modal button to show card details -->
-                                                        <b-button 
-                                                            v-b-modal="'viewCardModal'+col+car" 
-                                                            variant="info" 
-                                                            block>View Card</b-button>
+
+                                                        <!-- card BUTTONS -->
+                                                        <div class="">
+                                                            <!-- EDIT CARD b-dropdown -->
+                                                            <b-dropdown boundary="window" text="Edit Card">
+                                                                <div class="mx-3 my-3">
+                                                                    <ul>
+                                                                        <li>
+                                                                            <!-- modal button to show card details -->
+                                                                            <b-button v-b-modal="'viewCardModal'+col+car" variant="info">View Card</b-button>
+                                                                        </li>
+                                                                        <li>
+                                                                            <!-- delete card button -->
+                                                                            <b-button variant="danger" @click="deleteCard(col, car)">Delete Card</b-button>
+                                                                        </li>
+                                                                        <li>
+                                                                            <!-- modal button to move card  -->
+                                                                            <b-button v-b-modal="'moveCardModal'+col+car" variant="light" block>Move Card</b-button>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </b-dropdown>
+                                                        </div>
+
+
+                                                        
 
                                                             <!-- modal to view/edit card detials -->
                                                             <b-modal 
@@ -230,10 +258,7 @@
                                                             </b-modal>  
 
                                                             <!-- card FOOTER (cont...) -->
-                                                            <b-button 
-                                                                v-b-modal="'moveCardModal'+col+car" 
-                                                                variant="light" 
-                                                                block>Move Card</b-button>
+                                                            
                                                             <!-- MODAL allows user to edit card content -->
                                                             <b-modal 
                                                                 :id="'moveCardModal'+col+car" 
@@ -258,11 +283,22 @@
 
                                     <!-- COLUMN card FOOTER -->
                                     <b-card-footer>
-                                        <!-- button to edit column -->
-                                        <b-button 
-                                            v-b-modal="'editColumnModal'+col" 
-                                            variant="dark" 
-                                            block>View Column</b-button>
+
+                                        <!-- button DROPDOWN -->
+                                        <b-dropdown boundary="window" text="Edit Column">
+                                            <div class="mx-3 my-3">
+                                                <ul> 
+                                                    <li>
+                                                        <!-- button to edit column -->
+                                                        <b-button v-b-modal="'editColumnModal'+col" variant="dark" block>View Column</b-button>
+                                                    </li>
+                                                    <li>
+                                                        <!-- button to open create card modal  -->
+                                                        <b-button v-b-modal="'createCardModal'+col" variant="info" block>Create Card</b-button>
+                                                    </li> 
+                                                </ul>   
+                                            </div>
+                                        </b-dropdown>
                                     
                                         <!-- edit column MODAL -->
                                         <b-modal 
@@ -292,8 +328,6 @@
 
                                         <!-- COLUMN card FOOTER (CONTINUED...) -->
 
-                                        <!-- button to open create card modal  -->
-                                        <b-button v-b-modal="'createCardModal'+col" variant="info" block>Create Card</b-button>
                                         <!-- create card modal -->
                                         <b-modal 
                                             :id="'createCardModal'+col" 

@@ -7,6 +7,16 @@
 
  /* General Styling */
 
+ ul{
+	 list-style: none;
+	 text-align: center;
+	 padding: 0;
+ }
+
+ li{
+	 margin: 10%;
+ }
+
 /* Class Styling */
 .title{
 	color: blue;
@@ -14,5 +24,20 @@
 }
 
 .edit-board-buttons{
+	text-align: center;
+}
+
+.column-card{
+	text-align: center;
+}
+.card-title{
+	background-color: white;
+    border-radius: 10px;
+    padding: 4%;
+    text-align: center;
+}
+
+/* b-card for cards within column card */
+.card-card{
 	text-align: center;
 }
