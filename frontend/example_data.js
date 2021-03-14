@@ -155,3 +155,17 @@ const EXAMPLE_BOARD_0 = {
     priority: 2,
     columns: [EXAMPLE_COLUMN_0, EXAMPLE_COLUMN_1, EXAMPLE_COLUMN_2]
 }
+
+const EXAMPLE_BOARD_1 = {
+    boardId: 2,
+    name: "This is an example board",
+    color: "#aaaaaa",
+    backgroundImage: "beach.jpg",
+    tags: [],
+    boardDescription: "This is an example board description ",
+    projectDeadline: "",
+    priority: 2,
+    columns: []
+}
+
+const EXAMPLE_BOARD_LIST = [EXAMPLE_BOARD_0, EXAMPLE_BOARD_1]; 

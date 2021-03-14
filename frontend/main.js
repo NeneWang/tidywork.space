@@ -12,7 +12,7 @@ const app = new Vue({
             currentUser: null,
             currentBoard: EXAMPLE_BOARD_0,
             columns: EXAMPLE_BOARD_0.columns,
-            boards: [],
+            boards: EXAMPLE_BOARD_LIST,
             cardToMoveDestination: null,
             newCard: {
                 cardId: null, 

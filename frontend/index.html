@@ -42,6 +42,38 @@
         <!-- page header -->
         <header>
             <h1 class="title">{{currentBoard.name}}</h1>
+
+            <!-- select current board -->
+
+            <!-- select current board modal button -->
+            <b-button 
+                v-b-modal="'switchBoardModal'+currentBoard.name" 
+                variant="secondary" 
+                block>Switch Boards</b-button>
+
+            <!-- select current board modal  -->
+            <b-modal 
+                :id="'switchBoardModal'+currentBoard.name" 
+                title="Select Board" 
+                ok-only 
+                ok-title="Switch Boards"
+                @ok="">
+
+                <!-- board options -->
+                <label><b>Your Boards</b></label>
+                <select 
+                    name="boardSelection" 
+                    id="boardSelectionOptions" 
+                    v-model="currentBoard"
+                >
+                    <option v-for="(board, b) in boards" :value="b">{{board.name}}</option>
+                </select>
+
+
+
+            </b-modal>
+
+
             <!-- create column modal button -->
             <b-button 
                 v-b-modal="'newColumnModal'+currentBoard.name" 
