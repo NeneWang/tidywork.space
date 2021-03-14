@@ -6,6 +6,18 @@
 
 // helpful objects used to reset values 
 
+const resetNewBoard = {
+    boardId: null, 
+    name: "", 
+    backgroundImage: "", 
+    color: "", 
+    tags: [], 
+    boardDescription: "", 
+    projectDeadline: "", 
+    priority: "", 
+    columns: []
+}
+
 const resetNewCard = {
     cardId: null,
     columnId: null,

@@ -14,6 +14,17 @@ const app = new Vue({
             columns: EXAMPLE_BOARD_0.columns,
             boards: EXAMPLE_BOARD_LIST,
             cardToMoveDestination: null,
+            newBoard: {
+                boardId: null,
+                name: "",
+                backgroundImage: "",
+                color: "",
+                tags: [],
+                boardDescription: "",
+                projectDeadline: "",
+                priority: "",
+                columns: []
+            },
             newCard: {
                 cardId: null, 
                 columnId: null, 
@@ -103,6 +114,7 @@ const app = new Vue({
             let boardsToColumns = this.mapBoardsToColumns(boards, columns); // boardsToColumns = {*boardId* : [{column}] }
             let columnsToCards = this.mapColumnsToCards(columns, cards); // columnsToCards = {*columnId* : [{card}] }
 
+            // populate board, columns, etc based on user + selected board
         },
 
         // helper function to map users to their associated board (objects) based on FK (boardId) in user.userData.tables
@@ -228,6 +240,14 @@ const app = new Vue({
             this.columns.push(newColumnToAdd);
             // reset newColumn fields 
             this.newColumn = resetNewColumn; 
+        },
+        createBoard() {
+            // create new board using constructor 
+            let newBoardToAdd = new Board(this.newBoard.boardId, this.newBoard.name, this.newBoard.backgroundImage, this.newBoard.color, this.newBoard.tags, this.newBoard.boardDescription, this.newBoard.projectDeadline, this.newBoard.priority, this.newBoard.columns);
+            // push new board to the end of boards 
+            this.boards.push(newBoardToAdd);
+            // reset newColumn fields 
+            this.newBoard = resetNewBoard;
         },
         // deletes card from column based on indicies
         deleteCard(column, card) {

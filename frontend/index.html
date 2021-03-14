@@ -74,6 +74,35 @@
             </b-modal>
 
 
+            <!-- create new board modal button -->
+            <b-button 
+                v-b-modal="'newBoardModal'+currentBoard.name" 
+                variant="success" 
+                block>New Board</b-button>
+            
+            <!-- select current board modal  -->
+            <b-modal 
+            :id="'newBoardModal'+currentBoard.name" 
+            title="New Board" 
+            ok-only 
+            ok-title="Create Board"
+            @ok="createBoard()">
+
+                <!-- column title  -->
+                <label><b>Board Name</b></label>
+                <input 
+                    v-model="newBoard.name" 
+                    style="width: 100%" 
+                    type="text" 
+                    placeholder="Board Name"></input>
+                <hr />
+            
+                
+            
+            
+            </b-modal>
+
+
             <!-- create column modal button -->
             <b-button 
                 v-b-modal="'newColumnModal'+currentBoard.name" 
