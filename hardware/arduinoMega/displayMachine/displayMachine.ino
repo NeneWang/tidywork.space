@@ -3,14 +3,16 @@
 #include <TouchScreen.h> //// Touch Support  
 #include <TimerOne.h>
 
-//CONFIG
-const int COUNTER_MAX = 25;
-const int SCREEN_HEIGHT = 320;
-const int SCREEN_WIDTH = 240;
 
-//DEFINE MODS
-#define MODE_PLAY 0
-#define MODE_PAUSE 1
+// macros for color (16 bit)
+#define BLACK   0x0000
+#define BLUE    0x001F
+#define RED     0xF800
+#define GREEN   0x07E0
+#define CYAN    0x07FF
+#define MAGENTA 0xF81F
+#define YELLOW  0xFFE0
+#define WHITE   0xFFFF
 
 
 
@@ -26,16 +28,6 @@ const int SCREEN_WIDTH = 240;
 
 TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
 
-// macros for color (16 bit)
-#define BLACK   0x0000
-#define BLUE    0x001F
-#define RED     0xF800
-#define GREEN   0x07E0
-#define CYAN    0x07FF
-#define MAGENTA 0xF81F
-#define YELLOW  0xFFE0
-#define WHITE   0xFFFF
-
 #define LCD_CS A3
 #define LCD_CD A2
 #define LCD_WR A1
@@ -45,6 +37,15 @@ TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
 
 Elegoo_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
 
+
+//CONFIG
+const int COUNTER_MAX = 25;
+const int SCREEN_HEIGHT = 320;
+const int SCREEN_WIDTH = 240;
+
+//DEFINE MODS
+#define MODE_PLAY 0
+#define MODE_PAUSE 1
 
 //##variables
 
@@ -88,6 +89,8 @@ void iterateEverySecond() {
 void refreshScreen() {
   pinModeWriter();
 
+  paintButtons();
+
 }
 
 void refreshDigits() {
@@ -108,14 +111,25 @@ void pinModeReader() {
   pinMode(YP, INPUT);
 }
 
-void paintDigitsBlack() {
-  pinModeWriter();
-  
+//Paint function should be called after pinModeWriter()
 
+void paintAllBlack() {
+
+  tft.fillScreen(BLACK);
+}
+
+void paintDigitsBlack() {
 }
 
 void paintButtons() {
-  
+  tft.drawRect( 0, SCREEN_HEIGHT * 3 / 4, SCREEN_WIDTH / 2, 80, WHITE);
+  tft.drawRect( SCREEN_WIDTH * 1 / 2, SCREEN_HEIGHT * 3 / 4, SCREEN_WIDTH / 2, SCREEN_HEIGHT * 1 / 4, WHITE);
+
+  tft.drawRect( 0, SCREEN_HEIGHT * 2 / 4, SCREEN_WIDTH / 2, 80, WHITE);
+  tft.drawRect( SCREEN_WIDTH * 1 / 2, SCREEN_HEIGHT * 2 / 4, SCREEN_WIDTH / 2, SCREEN_HEIGHT * 1 / 4, WHITE);
+
+  //painting
+
 }
 
 
