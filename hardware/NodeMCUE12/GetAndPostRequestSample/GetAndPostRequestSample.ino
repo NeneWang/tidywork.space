@@ -61,5 +61,21 @@ int getFirstCardIndex(DynamicJsonDocument doc) {
     Serial.println(v["cardData"]["columnId"].as<String>());
   }
 
-  
+}
+
+void communicateDataToArduino(DynamicJsonDocument doc) {
+
+
+  while (Serial.available()) {
+    delay(1);
+    if (Serial.available() > 0) {
+      char c = doc["cards"][getFirstCardIndex(doc)];  //gets one byte from serial buffer
+      if (isControl(c)) {
+        //'Serial.println("it's a control character");
+        Serial.println(c);
+        break;
+      }
+    }
+  }
+
 }
