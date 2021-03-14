@@ -4,7 +4,15 @@
  * @authors Joseph Nagy
  */
 
+
+ /* General Styling */
+
+/* Class Styling */
 .title{
 	color: blue;
+	text-align: center;
+}
+
+.edit-board-buttons{
 	text-align: center;
 }

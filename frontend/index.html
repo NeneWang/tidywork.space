@@ -43,13 +43,21 @@
         <header>
             <h1 class="title">{{currentBoard.name}}</h1>
 
+
+            <div class="edit-board-buttons">
+                <!-- EDIT BOARD b-button-group -->
+                <b-button-group>
+                    <!-- select current board modal button -->
+                    <b-button v-b-modal="'switchBoardModal'+currentBoard.name" variant="info">Switch Boards</b-button>
+                    <!-- create new board modal button -->
+                    <b-button v-b-modal="'newBoardModal'+currentBoard.name" variant="info">New Board</b-button>
+                    <!-- create column modal button -->
+                    <b-button v-b-modal="'newColumnModal'+currentBoard.name" variant="info">New Column</b-button>
+                </b-button-group>
+            </div> 
+
             <!-- select current board -->
 
-            <!-- select current board modal button -->
-            <b-button 
-                v-b-modal="'switchBoardModal'+currentBoard.name" 
-                variant="secondary" 
-                block>Switch Boards</b-button>
 
             <!-- select current board modal  -->
             <b-modal 
@@ -73,12 +81,6 @@
 
             </b-modal>
 
-
-            <!-- create new board modal button -->
-            <b-button 
-                v-b-modal="'newBoardModal'+currentBoard.name" 
-                variant="success" 
-                block>New Board</b-button>
             
             <!-- select current board modal  -->
             <b-modal 
@@ -95,19 +97,11 @@
                     style="width: 100%" 
                     type="text" 
                     placeholder="Board Name"></input>
-                <hr />
-            
-                
+                <hr /> 
             
             
             </b-modal>
 
-
-            <!-- create column modal button -->
-            <b-button 
-                v-b-modal="'newColumnModal'+currentBoard.name" 
-                variant="info" 
-                block>New Column</b-button>
             
             <!-- create column project modal  -->
             <b-modal 
