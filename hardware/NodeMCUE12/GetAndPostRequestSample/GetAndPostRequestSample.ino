@@ -8,9 +8,14 @@ const char* password = "1010101010";
 //Now you know my wifi password e.e
 
 int workingColumn = 2;
-int newCards = 0;;
+int newCards = 0;
 
-HTTPClient http;  
+#define SUC  D5
+#define SUT  D6
+
+boolean flagUpdateCard = false, prevflagUpdateCard = !flagUpdateCard, flagUpdateTime = false, prevflagUpdateTime = !flagUpdateTime;
+
+HTTPClient http;
 
 void setup () {
 
@@ -25,16 +30,29 @@ void setup () {
 
   }
 
-  
+  pinMode(SUC, INPUT);
+  pinMode(SUT, INPUT);
+
+
 
 }
 
 void loop() {
 
+  flagUpdateCard = digitalRead(SUC);
+  flagUpdateTime = digitalRead(SUT);
+
+
+  confirmUpdate();
+
+  delay(100);
+}
+
+void getCardsData() {
   if (WiFi.status() == WL_CONNECTED) { //Check WiFi connection status
 
-    
 
+    
     http.begin("http://wngnelson.com/api/tidywork/api/card.php");
     int httpCode = http.GET();
 
@@ -56,8 +74,6 @@ void loop() {
     http.end();   //Close connection
 
   }
-
-  delay(3000);    //Get Cards every so often
 }
 
 int getFirstCardIndex(DynamicJsonDocument doc) {
@@ -76,19 +92,31 @@ int getFirstCardIndex(DynamicJsonDocument doc) {
 
 void confirmUpdate() {
   //If this is on, then add the newCards count;
-  if (true) {
-    newCards++;
-  }
+  updateUserData()
 }
 
 
+
+
+
 void updateUserData() {
+  if (flagUpdateCard != prevflagUpdateCard) {
+    if (flagUpdateCard) {
 
-  http.begin("http://wngnelson.com/api/tidywork/api/user.php?newCard=" + newCards);
-  int httpCode = http.GET();
+      http.begin("http://wngnelson.com/api/tidywork/api/user.php?newCard");
+      int httpCode = http.GET();
+      if (httpCode > 0) { //Check the returning code
+        Serial.println(flagUpdateCard);
 
-  //That should update the new card amounts
-  newCards = 0;
+        String payload = http.getString();   //Get the request response payload
+        DynamicJsonDocument doc(8192);
+        deserializeJson(doc, payload);
+
+        newCards = 0;
+        flagUpdateCard = prevflagUpdateCard;
+      }
+    }
+  }
 }
 
 void communicateDataToArduino(DynamicJsonDocument doc) {
