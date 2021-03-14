@@ -6,11 +6,26 @@
 
 
  /* General Styling */
+ body {
+	background-color: #EFA18A;
+}
+
+/* ID styling */
 
 
 /* Class Styling */
+
+/* .myDropdown ul li{
+	background-color: #ACAEC5;
+    color: black;
+}
+
+.card-body {
+	background-color: #E2BAB1;
+} */
+
 .title{
-	color: blue;
+	color: #252527;
 	text-align: center;
 }
 
