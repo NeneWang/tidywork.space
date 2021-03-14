@@ -272,7 +272,9 @@
                                                                         <div>
                                                                             <p>Comment Timestamp: {{displayDate(comment.timestamp)}}</p>
                                                                             <p>Comment Description: {{comment.description}}</p>
-                                                                            <b-button variant="danger" block @click="deleteComment(col, car, com)">Delete Comment</b-button>
+                                                                            <div class="deleteCommentButton">
+                                                                                <b-button style="width: 25%" variant="warning" block text-center @click="deleteComment(col, car, com)">Delete Comment</b-button>
+                                                                            </div>
                                                                         </div>
                                                                     </li>
                                                                 </ul>

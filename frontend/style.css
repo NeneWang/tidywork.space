@@ -26,14 +26,11 @@
 
 /* Class Styling */
 
-/* .myDropdown ul li{
-	background-color: #ACAEC5;
-    color: black;
+.deleteCommentButton button{
+	width: 25% !important;
+    margin: auto;
 }
 
-.card-body {
-	background-color: #E2BAB1;
-} */
 
 .title{
 	color: #252527;
