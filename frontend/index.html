@@ -6,7 +6,7 @@
     <!-- always put your name in your work -->
     <meta name="authors" content="Joseph Nagy">
     <!-- always label your name with a title -->
-    <title> LOCAL tidywork.space</title>
+    <title>tidywork.space</title>
     <!-- scale page to fit entire screen, so it properly fills non-desktop devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- DEV-only for easier refreshing: stop the web browser from ever caching this page or its images -->
@@ -41,6 +41,7 @@
     <div id="app" :style="{backgroundColor: currentBoard.color}">
         <!-- page header -->
         <header>
+            <img id="upper_left" src="data/tw-logo.png" alt="tidywork.space logo">
             <h1 class="title">{{currentBoard.name}}</h1>
 
             <div class="edit-board-dropdown">
@@ -404,4 +405,5 @@
 
     </div>  
 </body> 
+
 </html>

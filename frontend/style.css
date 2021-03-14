@@ -8,6 +8,11 @@
  /* General Styling */
 
 /* ID styling */
+#upper_left {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
 
 
 /* Class Styling */
