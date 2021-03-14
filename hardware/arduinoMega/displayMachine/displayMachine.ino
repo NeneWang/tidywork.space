@@ -58,14 +58,15 @@ String cardName = "sample card", columnName = "Doing", timerText = "";
 int counterStatus = MODE_PAUSE;
 int timerStatus = MODE_PAUSE;
 
-
+unsigned long startMillis;
+unsigned long currentMillis;
 
 
 
 void setup() {
 
-  counterStatus = MODE_PLAY;
-  timerStatus = MODE_PLAY;
+
+  //  timerPressed();
   Serial.begin(9600);
   //Timer One     
   Timer1.initialize (1000);
@@ -75,12 +76,18 @@ void setup() {
   tft.reset();
   tft.begin(0x9341);
   refreshScreen();
-
+  startMillis = millis(); 
 
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+
+  currentMillis = millis();
+  if (currentMillis - startMillis >= 100)
+  {
+    buttonHandlers();
+  }
+
 
 }
 
@@ -88,6 +95,7 @@ void loop() {
 //general machine
 
 void iterateEverySecond() {
+  pinModeWriter();
   refreshDigits();
 
 }
@@ -220,27 +228,89 @@ void locateAndPrint(String text, double x, double y, double size) {
 }
 
 
+void buttonHandlers() {
+  TSPoint p = ts.getPoint();
+
+  if (p.z > 10 && p.z < 1000)
+  {
+    p.x = map(p.x, TS_MINX, TS_MAXX, tft.width(), 0);
+    p.y = map(p.y, TS_MINY, TS_MAXY, tft.height(), 0);
+    if (p.x > 0 && p.x < SCREEN_WIDTH)
+    {
+
+      //      First Row
+      if (p.y > SCREEN_HEIGHT * 3 / 4 && p.y < SCREEN_HEIGHT)
+      {
+        if (p.x > SCREEN_WIDTH * 0 / 2 && p.x < SCREEN_WIDTH * 1 / 2) {
+          timerPressed();
+        }
+        else if (p.x > SCREEN_WIDTH * 1 / 2 && p.x < 2 * SCREEN_WIDTH * 2 / 2 ) {
+          counterPressed();
+        }
+
+        if (p.y > SCREEN_HEIGHT * 2 / 4 && p.y < SCREEN_HEIGHT * 3 / 4)
+        {
+          if (p.x > SCREEN_WIDTH * 0 / 4 && p.x < SCREEN_WIDTH * 1 / 4) {
+            cardPressed();
+          }
+          else if (p.x > SCREEN_WIDTH * 1 / 4 && p.x < 2 * SCREEN_WIDTH * 2 / 4 ) {
+            boardPressed();
+          }
+          else if (p.x > SCREEN_WIDTH * 2 / 4 && p.x < 2 * SCREEN_WIDTH * 3 / 4 ) {
+            completePressed();
+          }
+        }
+      }
+    }
+  }
+}
+
 
 
 //button handlers
-void cardPressed (){}
-
-void boardPressed (){}
-
-void completePressed (){}
-
-void timerPressed (){}
-
-void counterPressed (){}
 
 
 
+void cardPressed () {}
 
+void boardPressed () {}
+
+void completePressed () {}
+
+void timerPressed () {
+  switch (timerStatus) {
+    case MODE_PLAY:
+      timerStatus = MODE_PAUSE;
+      break;
+
+    case MODE_PAUSE:
+      timerStatus = MODE_PLAY;
+      break;
+    default:
+      break;
+  }
+}
+
+void counterPressed () {
+  switch (counterStatus) {
+    case MODE_PLAY:
+      counterStatus = MODE_PAUSE;
+      break;
+
+    case MODE_PAUSE:
+      counterStatus = MODE_PLAY;
+      break;
+    default:
+      break;
+  }
+}
 
 
 void timerOne(void) {
 
   ms = ms + 1;
+
+
   if (ms >= 1000) {
     iterateEverySecond();
     ms = 0;
