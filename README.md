@@ -32,6 +32,8 @@ We built the hardware using Arduino mega based on atmega 2560, ESP8266 NodeMCU, 
 ## Accomplishments that we're proud of
 
 We’re proud of the nice backend API that we built. In addition, the hardware is a big accomplishment because this is the first hackathon where we tried out building hardware. We’re also proud of building a website that functions and does not have a lot of bugs.
+With the hardware, we learned how to filter noises, how to communicate between arduino, how to make get and post requests, how to connect arduino to the internet. 
+Regarding the backend, we learned how to create APIs using PHP and MySQL to return database as JSON and how to run cross domain APIs.
 
 ## What we learned
 Due to our varying skill sets, we were able to learn things off of each other like basic html/css and javascript syntax.
