@@ -5,6 +5,8 @@
 
 //CONFIG
 const int COUNTER_MAX = 25;
+const int SCREEN_HEIGHT = 320;
+const int SCREEN_WIDTH = 240;
 
 //DEFINE MODS
 #define MODE_PLAY 0
@@ -47,7 +49,7 @@ Elegoo_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
 //##variables
 
 long counterSegs = 0, timerSegs = 0, ms = 0;
-String cardName - "sample card", tableName = "Doing", timerText = "";
+String cardName = "sample card", tableName = "Doing", timerText = "";
 
 //controllers
 int counterStatus = MODE_PAUSE;
@@ -65,7 +67,7 @@ void setup() {
   //Setup touchScreen
   tft.reset();
   tft.begin(0x9341);
-  fillScreen();
+  refreshScreen();
 
 
 }
@@ -76,19 +78,63 @@ void loop() {
 }
 
 
+//general machine
+
+void iterateEverySecond() {
+
+}
+
+
+void refreshScreen() {
+  pinModeWriter();
+
+}
+
+void refreshDigits() {
+  pinModeWriter();
+
+}
+
+
+//screen
+
+void pinModeWriter() {
+  pinMode(XM, OUTPUT);
+  pinMode(YP, OUTPUT);
+}
+
+void pinModeReader() {
+  pinMode(XM, INPUT);
+  pinMode(YP, INPUT);
+}
+
+void paintDigitsBlack() {
+  pinModeWriter();
+  
+
+}
+
+void paintButtons() {
+  
+}
+
+
+
+
+//button handlers
+
 
 void timerOne(void) {
 
   ms = ms + 1;
   if (ms >= 1000) {
-    //iterateEverySecond();
-    segs = segs + 1;
+    iterateEverySecond();
     ms = 0;
-    if (counterStatus == MODE_WORK) {
+    if (counterStatus == MODE_PLAY) {
       counterSegs = counterSegs + 1;
     }
 
-    if (timerStatus == MODE_WORK) {
+    if (timerStatus == MODE_PLAY) {
       timerSegs = timerSegs + 1;
     }
   }
