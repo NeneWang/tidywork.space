@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<head>
+    <script type="text/javascript">
+        var dummyData, metaDataArray, userIsWorking = false;
+        const setupCardsGraph = (data) => {
+            dummyData = data;
+            // console.log(dummyData);
+            metaDataArray = dummyData.meta;
+            // console.log([...metaDataArray][0]);
+
+
+            // Write simple algorithm that updates the data
+            var cardCompletedDataPoints = [];
+
+            [...metaDataArray].forEach((dateData) => {
+                var indObject = {
+                    label: dateData.metaData.date,
+                    y: dateData.metaData.cards
+                }
+                cardCompletedDataPoints.push(indObject);
+            })
+
+            // console.log(cardCompletedDataPoints);
+
+
+            var cardsChart = new CanvasJS.Chart("cardsChartContainer", {
+                theme: "light1", // "light2", "dark1", "dark2"
+                animationEnabled: false, // change to true		
+                title: {
+                    text: "Cards Completed"
+                },
+                data: [{
+                    // Change type to "bar", "area", "spline", "pie",etc.
+                    type: "column",
+                    dataPoints: cardCompletedDataPoints
+                }]
+            });
+            cardsChart.render();
+        }
+
+
+        const setupTimeGraph = (data) => {
+            dummyData = data;
+            metaDataArray = dummyData.meta;
+            var cardCompletedDataPoints = [];
+
+            [...metaDataArray].forEach((dateData) => {
+                var indObject = {
+                    label: dateData.metaData.date,
+                    y: dateData.metaData.timeSpent
+                }
+                cardCompletedDataPoints.push(indObject);
+            })
+
+            var timeSpentChart = new CanvasJS.Chart("timeChartContainer", {
+                theme: "light1",
+                animationEnabled: false,
+                title: {
+                    text: "Time Spent"
+                },
+                data: [{
+                    type: "column",
+                    dataPoints: cardCompletedDataPoints
+                }]
+            });
+            timeSpentChart.render();
+        }
+
+
+
+        window.onload = function () {
+            var t = setInterval(iterateEvery100Milis, 100);
+        }
+
+        var oldData = {};
+        const iterateEvery100Milis = () => {
+            $.get("http://wngnelson.com/api/tidywork/api/user.php?meta", function (data) {
+                if (JSON.stringify(oldData) === JSON.stringify(data)) {
+                    return;
+                }
+                setupCardsGraph(data);
+                setupTimeGraph(data);
+                setText(data);
+
+
+
+                oldData = data;
+            });
+        }
+
+        const setText = (data) => {
+
+            // console.log(data.meta[3].metaData.isTracking);
+            userIsWorking = data.meta[3].metaData.isTracking;
+            $("#currentStatus").text(userIsWorking == true ? "User is on a task" : "User is taking a break");
+
+
+            console.log(`is user working?: ${userIsWorking}`);
+        }
+    </script>
+</head>
+
+<body>
+    <div>
+        <h2 id="currentStatus"> </h2>
+    </div>
+    <div id="cardsChartContainer" style="height: 370px; width: 100%;"></div>
+    <div id="timeChartContainer" style="height: 370px; width: 100%;"></div>
+
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"> </script>
+</body>
+
+</html>
