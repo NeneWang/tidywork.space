@@ -29,7 +29,7 @@
             console.log(cardCompletedDataPoints);
 
 
-            var cardsChart = new CanvasJS.Chart("chartContainer", {
+            var cardsChart = new CanvasJS.Chart("cardsChartContainer", {
                 theme: "light1", // "light2", "dark1", "dark2"
                 animationEnabled: false, // change to true		
                 title: {
@@ -44,18 +44,48 @@
             cardsChart.render();
         }
 
+        
+        const setupTimeGraph = (data) => {
+            dummyData = data;
+            metaDataArray = dummyData.meta;
+            var cardCompletedDataPoints = [];
+
+            [...metaDataArray].forEach((dateData) => {
+                var indObject = {
+                    label: dateData.metaData.date,
+                    y: dateData.metaData.timeSpent
+                }
+                cardCompletedDataPoints.push(indObject);
+            })
+
+            var timeSpentChart = new CanvasJS.Chart("timeChartContainer", {
+                theme: "light1", 
+                animationEnabled: false, 	
+                title: {
+                    text: "Time Spent"
+                },
+                data: [{
+                    type: "column",
+                    dataPoints: cardCompletedDataPoints
+                }]
+            });
+            timeSpentChart.render();
+        }
+
 
 
         window.onload = function () {
             $.get("http://wngnelson.com/api/tidywork/api/user.php?meta", function (data) {
                 setupCardsGraph(data);
+                setupTimeGraph(data);
             });
         }
     </script>
 </head>
 
 <body>
-    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+    <div id="cardsChartContainer" style="height: 370px; width: 100%;"></div>
+    <div id="timeChartContainer" style="height: 370px; width: 100%;"></div>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"> </script>
 </body>
 
