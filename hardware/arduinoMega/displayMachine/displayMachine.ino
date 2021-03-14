@@ -76,16 +76,18 @@ void setup() {
   tft.reset();
   tft.begin(0x9341);
   refreshScreen();
-  startMillis = millis(); 
+  startMillis = millis();
 
 }
 
 void loop() {
 
+
   currentMillis = millis();
-  if (currentMillis - startMillis >= 100)
+  if (currentMillis - startMillis >= 200)
   {
     buttonHandlers();
+    startMillis = currentMillis;
   }
 
 
@@ -109,7 +111,6 @@ void refreshScreen() {
   paintButtons();
   refreshDigits();
 
-  pinModeReader();
 
 }
 
@@ -121,7 +122,6 @@ void refreshDigits() {
 
 
 
-  pinModeReader();
 
 }
 
@@ -133,8 +133,6 @@ void pinModeWriter() {
   pinMode(YP, OUTPUT);
 }
 
-void pinModeReader() {
-}
 
 //Paint function should be called after pinModeWriter()
 
@@ -150,6 +148,7 @@ void paintDigitsBlack() {
 }
 
 void printDigits() {
+  pinModeWriter();
   printCard();
   printColumn();
   printTimer();
@@ -195,6 +194,8 @@ String getTimeInMins(int segs) {
   return (String)((int) segs / 60) + ":" + ((String)((int)segs % 60));
 }
 void printCard() {
+  pinModeWriter();
+
   String message = "Card: ";
   locateAndPrint( message, SCREEN_WIDTH * 1 / 12, SCREEN_HEIGHT * 1 / 6, 2);
   locateAndPrint( cardName, SCREEN_WIDTH * 13 / 24, SCREEN_HEIGHT * 1 / 6, 1.2);
@@ -202,12 +203,14 @@ void printCard() {
 }
 
 void printColumn() {
+  pinModeWriter();
   String message = "Table: ";
   locateAndPrint( message, SCREEN_WIDTH * 1 / 12, SCREEN_HEIGHT * 2 / 9, 2);
   locateAndPrint( columnName, SCREEN_WIDTH * 13 / 24, SCREEN_HEIGHT * 2 / 9, 2);
 }
 
 void printTimer() {
+  pinModeWriter();
   String message = "Timer: ";
   locateAndPrint( message, SCREEN_WIDTH * 1 / 12, SCREEN_HEIGHT * 5 / 18, 2);
   locateAndPrint( getTimeInMins(timerSegs), SCREEN_WIDTH * 13 / 24, SCREEN_HEIGHT * 5 / 18, 2);
@@ -215,6 +218,7 @@ void printTimer() {
 
 
 void printCounter() {
+  pinModeWriter();
   String message = "Counter: ";
   locateAndPrint( message, SCREEN_WIDTH * 1 / 12, SCREEN_HEIGHT * 1 / 3, 2);
   locateAndPrint( getTimeInMins(counterSegs), SCREEN_WIDTH * 13 / 24, SCREEN_HEIGHT * 1 / 3, 2);
@@ -247,20 +251,21 @@ void buttonHandlers() {
         else if (p.x > SCREEN_WIDTH * 1 / 2 && p.x < 2 * SCREEN_WIDTH * 2 / 2 ) {
           counterPressed();
         }
+      }
 
-        if (p.y > SCREEN_HEIGHT * 2 / 4 && p.y < SCREEN_HEIGHT * 3 / 4)
-        {
-          if (p.x > SCREEN_WIDTH * 0 / 4 && p.x < SCREEN_WIDTH * 1 / 4) {
-            cardPressed();
-          }
-          else if (p.x > SCREEN_WIDTH * 1 / 4 && p.x < 2 * SCREEN_WIDTH * 2 / 4 ) {
-            boardPressed();
-          }
-          else if (p.x > SCREEN_WIDTH * 2 / 4 && p.x < 2 * SCREEN_WIDTH * 3 / 4 ) {
-            completePressed();
-          }
+      if (p.y > SCREEN_HEIGHT * 2 / 4 && p.y < SCREEN_HEIGHT * 3 / 4)
+      {
+        if (p.x > SCREEN_WIDTH * 0 / 4 && p.x < SCREEN_WIDTH * 1 / 4) {
+          cardPressed();
+        }
+        else if (p.x > SCREEN_WIDTH * 1 / 4 && p.x <  SCREEN_WIDTH * 2 / 4 ) {
+          boardPressed();
+        }
+        else if (p.x > SCREEN_WIDTH * 2 / 4 && p.x < SCREEN_WIDTH * 4 / 4 ) {
+          completePressed();
         }
       }
+
     }
   }
 }
@@ -271,13 +276,20 @@ void buttonHandlers() {
 
 
 
-void cardPressed () {}
+void cardPressed () {
+  Serial.println("Card");
+}
 
-void boardPressed () {}
+void boardPressed () {
+  Serial.println("Board");
+}
 
-void completePressed () {}
+void completePressed () {
+  Serial.println("Completed");
+}
 
 void timerPressed () {
+  Serial.println("Timer");
   switch (timerStatus) {
     case MODE_PLAY:
       timerStatus = MODE_PAUSE;
@@ -292,6 +304,7 @@ void timerPressed () {
 }
 
 void counterPressed () {
+  Serial.println("Counter");
   switch (counterStatus) {
     case MODE_PLAY:
       counterStatus = MODE_PAUSE;
