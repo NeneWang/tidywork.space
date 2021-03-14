@@ -177,7 +177,7 @@ void paintButtons() {
   locateAndPrint("Card", SCREEN_WIDTH * 1 / 16, SCREEN_HEIGHT * 20 / 32, 1);
   locateAndPrint("Board", SCREEN_WIDTH * 5 / 16, SCREEN_HEIGHT * 20 / 32, 1);
 
-  locateAndPrint("Counter", SCREEN_WIDTH * 9 / 16, SCREEN_HEIGHT * 19 / 32, 2);
+  locateAndPrint("Complete", SCREEN_WIDTH * 9 / 16, SCREEN_HEIGHT * 19 / 32, 2);
 
 
 
@@ -223,6 +223,19 @@ void locateAndPrint(String text, double x, double y, double size) {
 
 
 //button handlers
+void cardPressed (){}
+
+void boardPressed (){}
+
+void completePressed (){}
+
+void timerPressed (){}
+
+void counterPressed (){}
+
+
+
+
 
 
 void timerOne(void) {
