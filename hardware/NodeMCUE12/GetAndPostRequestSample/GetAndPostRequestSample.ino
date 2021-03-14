@@ -5,8 +5,12 @@
 
 const char* ssid = "FiOS-OMJJ7";
 const char* password = "1010101010";
+//Now you know my wifi password e.e
 
 int workingColumn = 2;
+int newCards = 0;;
+
+HTTPClient http;  
 
 void setup () {
 
@@ -21,16 +25,18 @@ void setup () {
 
   }
 
+  
+
 }
 
 void loop() {
 
   if (WiFi.status() == WL_CONNECTED) { //Check WiFi connection status
 
-    HTTPClient http;  //Declare an object of class HTTPClient
+    
 
-    http.begin("http://wngnelson.com/api/tidywork/api/card.php");  //Specify request destination
-    int httpCode = http.GET();                                  //Send the request
+    http.begin("http://wngnelson.com/api/tidywork/api/card.php");
+    int httpCode = http.GET();
 
     if (httpCode > 0) { //Check the returning code
 
@@ -42,7 +48,7 @@ void loop() {
         Serial.println(v.as<String>());
       }
 
-      getFirstCardIndex(doc);
+      //      getFirstCardIndex(doc);
 
 
     }
@@ -51,16 +57,38 @@ void loop() {
 
   }
 
-  delay(3000);    //Send a request every 30 seconds
+  delay(3000);    //Get Cards every so often
 }
 
 int getFirstCardIndex(DynamicJsonDocument doc) {
-
+  int minIndex = 99;
   JsonArray arrayOfCards = doc["cards"].as<JsonArray>();
   for (JsonVariant v : arrayOfCards) {
-    Serial.println(v["cardData"]["columnId"].as<String>());
+    int index = (v["cardData"]["columnId"].as<int>());
+    if (index < minIndex) {
+      minIndex - index;
+    }
   }
 
+  return minIndex;
+
+}
+
+void confirmUpdate() {
+  //If this is on, then add the newCards count;
+  if (true) {
+    newCards++;
+  }
+}
+
+
+void updateUserData() {
+
+  http.begin("http://wngnelson.com/api/tidywork/api/user.php?newCard=" + newCards);
+  int httpCode = http.GET();
+
+  //That should update the new card amounts
+  newCards = 0;
 }
 
 void communicateDataToArduino(DynamicJsonDocument doc) {
