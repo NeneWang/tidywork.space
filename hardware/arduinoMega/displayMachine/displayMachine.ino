@@ -301,6 +301,8 @@ void timerPressed () {
     default:
       break;
   }
+
+  timerColor();
 }
 
 void counterPressed () {
@@ -316,6 +318,50 @@ void counterPressed () {
     default:
       break;
   }
+
+  counterColor();
+}
+
+
+// color handler
+void counterColor() {
+  pinModeWriter();
+  switch (counterStatus) {
+    case MODE_PLAY:
+      tft.fillRect(SCREEN_WIDTH  * 1 / 2 , SCREEN_HEIGHT * 3 / 4, SCREEN_WIDTH / 2, 80, RED);
+      break;
+
+    case MODE_PAUSE:
+      tft.fillRect(SCREEN_WIDTH  * 1 / 2 , SCREEN_HEIGHT * 3 / 4, SCREEN_WIDTH / 2, 80, LIGHTGREY);
+      break;
+    default:
+      break;
+  }
+
+  tft.drawRect( SCREEN_WIDTH * 1 / 2, SCREEN_HEIGHT * 3 / 4, SCREEN_WIDTH / 2, SCREEN_HEIGHT * 1 / 4, WHITE);
+  locateAndPrint("Counter", SCREEN_WIDTH * 9 / 16, SCREEN_HEIGHT * 27 / 32, 2);
+
+
+}
+
+void timerColor() {
+  pinModeWriter();
+  switch (timerStatus) {
+    case MODE_PLAY:
+      tft.fillRect( SCREEN_WIDTH * 0 / 2, SCREEN_HEIGHT * 3 / 4, SCREEN_WIDTH / 2, SCREEN_HEIGHT * 1 / 4, GREEN);
+      break;
+
+    case MODE_PAUSE:
+      tft.fillRect( SCREEN_WIDTH * 0 / 2, SCREEN_HEIGHT * 3 / 4, SCREEN_WIDTH / 2, SCREEN_HEIGHT * 1 / 4, LIGHTGREY);
+      break;
+    default:
+      break;
+  }
+
+  
+  tft.drawRect( 0, SCREEN_HEIGHT * 3 / 4, SCREEN_WIDTH / 2, 80, WHITE);
+  locateAndPrint("Timer", SCREEN_WIDTH * 1 / 8, SCREEN_HEIGHT * 27 / 32, 2);
+
 }
 
 
