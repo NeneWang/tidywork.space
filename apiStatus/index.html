@@ -78,11 +78,16 @@
             var t = setInterval(iterateEvery100Milis, 100);
         }
 
-        
+        var oldData = {};
         const iterateEvery100Milis = () => {
             $.get("http://wngnelson.com/api/tidywork/api/user.php?meta", function (data) {
+                if(JSON.stringify(oldData) === JSON.stringify(data)){
+                    return;
+                }
                 setupCardsGraph(data);
                 setupTimeGraph(data);
+
+                oldData = data;
             });
         }
 
