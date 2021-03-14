@@ -1,4 +1,4 @@
-# tidywork.space Project Details
+# Project Details: tidywork.space
 ## Inspiration
 We were inspired by Trello to make our own version of a web app that enhances people’s productivity. One way to do that is to fully organize one’s tasks, so people know exactly what they need to be working on at what time. We wanted people to give people the ability to arrange their tasks by subject or project and manage their workflow easily.
 
