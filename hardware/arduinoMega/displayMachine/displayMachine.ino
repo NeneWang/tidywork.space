@@ -14,6 +14,8 @@
 #define YELLOW  0xFFE0
 #define WHITE   0xFFFF
 
+#define LIGHTGREY 0xE71C
+
 
 
 //Tuch screen
@@ -122,13 +124,56 @@ void paintDigitsBlack() {
 }
 
 void paintButtons() {
+
+  //Painting
+
+  tft.fillRect(0, SCREEN_HEIGHT * 3 / 4, SCREEN_WIDTH / 2, 80, LIGHTGREY);
+  tft.fillRect( SCREEN_WIDTH * 1 / 2, SCREEN_HEIGHT * 3 / 4, SCREEN_WIDTH / 2, SCREEN_HEIGHT * 1 / 4, LIGHTGREY);
+
+  tft.fillRect( 0, SCREEN_HEIGHT * 2 / 4, SCREEN_WIDTH / 2, 80, YELLOW);
+  tft.fillRect( SCREEN_WIDTH * 1 / 2, SCREEN_HEIGHT * 2 / 4, SCREEN_WIDTH / 2, SCREEN_HEIGHT * 1 / 4, GREEN);
+
+
+
+  //Borders
   tft.drawRect( 0, SCREEN_HEIGHT * 3 / 4, SCREEN_WIDTH / 2, 80, WHITE);
   tft.drawRect( SCREEN_WIDTH * 1 / 2, SCREEN_HEIGHT * 3 / 4, SCREEN_WIDTH / 2, SCREEN_HEIGHT * 1 / 4, WHITE);
 
   tft.drawRect( 0, SCREEN_HEIGHT * 2 / 4, SCREEN_WIDTH / 2, 80, WHITE);
+  tft.drawRect( SCREEN_WIDTH * 1 / 4 , SCREEN_HEIGHT * 2 / 4, SCREEN_WIDTH / 4, 80, WHITE);
   tft.drawRect( SCREEN_WIDTH * 1 / 2, SCREEN_HEIGHT * 2 / 4, SCREEN_WIDTH / 2, SCREEN_HEIGHT * 1 / 4, WHITE);
 
-  //painting
+
+  //Text
+  locateAndPrint("Timer", SCREEN_WIDTH*1/8, SCREEN_HEIGHT*27/32, 2);
+  locateAndPrint("Counter", SCREEN_WIDTH*9/16, SCREEN_HEIGHT*27/32, 2);
+
+  
+  locateAndPrint("Card", SCREEN_WIDTH*1/16, SCREEN_HEIGHT*20/32, 1);
+  locateAndPrint("Board", SCREEN_WIDTH*5/16, SCREEN_HEIGHT*20/32, 1);
+
+  locateAndPrint("Counter", SCREEN_WIDTH*9/16, SCREEN_HEIGHT*19/32, 2);
+
+
+
+}
+
+
+void printCard(){
+  
+}
+
+void printTask(){}
+
+void printTimer(){}
+
+
+void printCounter(){}
+
+void locateAndPrint(String text, double x, double y, int size) {
+  tft.setTextSize(size);
+  tft.setCursor(x, y);
+  tft.println(text);
 
 }
 
