@@ -159,7 +159,7 @@ void updateUserTime() {
     if (flagUpdateTime) {
       Serial.println("ng weapons");
 
-      http.begin("http://wngnelson.com/api/tidywork/api/user.php?newCard");
+      http.begin("http://wngnelson.com/api/tidywork/api/user.php?updateTime");
       int httpCode = http.GET();
       if (httpCode > 0) { //Check the returning code
         Serial.println(flagUpdateCard);
