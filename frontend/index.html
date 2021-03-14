@@ -38,7 +38,7 @@
 </head>
 
 <body>
-    <div id="app">
+    <div id="app" :style="{backgroundColor: currentBoard.color}">
         <!-- page header -->
         <header>
             <h1 class="title">{{currentBoard.name}}</h1>
@@ -60,12 +60,34 @@
                                 <!-- create column modal button -->
                                 <b-button v-b-modal="'newColumnModal'+currentBoard.name" variant="info">New Column</b-button>
                             </li>
+                            <li>
+                                <!-- create column modal button -->
+                                <b-button v-b-modal="'boardOptionsModal'+currentBoard.name" variant="info">Edit Board</b-button>
+                            </li>
                         </ul>
                     </div>
                 </b-dropdown>
             </div> 
 
-            <!-- select current board -->
+            <!-- modal to view/edit board detials -->
+            <b-modal 
+                :id="'boardOptionsModal'+currentBoard.name" 
+                :title="currentBoard.name" 
+                ok-only 
+                ok-title="Close Board Options">
+            
+                <!-- modal CONTENT to view/edit BOARD detials -->
+            
+                <!-- edit title -->
+                <label><b>Board Title</b></label>
+                <input v-model="currentBoard.name" style="width: 100%" type="text"></input>
+                <hr />
+            
+                <!-- edit background color -->
+                <label><b>Board Background Color</b></label>
+                <input v-model="currentBoard.color" style="width: 100%" type="color"></input>
+                <hr />
+            </b-modal>
 
 
             <!-- select current board modal  -->

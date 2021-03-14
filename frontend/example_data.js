@@ -147,7 +147,7 @@ const EXAMPLE_COLUMN_2 = {
 const EXAMPLE_BOARD_0 = {
     boardId: 1,
     name: "Schoolwork",
-    color: "#aaaaaa",
+    color: "#EFA18A",
     backgroundImage: "beach.jpg",
     tags: [EXAMPLE_TAG_0, EXAMPLE_TAG_1],
     boardDescription: "This tidywork.space board is used to organize the schoolwork for my classes",
@@ -158,8 +158,8 @@ const EXAMPLE_BOARD_0 = {
 
 const EXAMPLE_BOARD_1 = {
     boardId: 2,
-    name: "This is an example board",
-    color: "#aaaaaa",
+    name: "Blank Board",
+    color: "#EFA18A",
     backgroundImage: "beach.jpg",
     tags: [],
     boardDescription: "This is an example board description ",
