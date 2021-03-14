@@ -10,9 +10,9 @@
         var metaDataArray;
         const setupCardsGraph = (data) => {
             dummyData = data;
-            console.log(dummyData);
+            // console.log(dummyData);
             metaDataArray = dummyData.meta;
-            console.log([...metaDataArray][0]);
+            // console.log([...metaDataArray][0]);
 
 
             // Write simple algorithm that updates the data
@@ -26,7 +26,7 @@
                 cardCompletedDataPoints.push(indObject);
             })
 
-            console.log(cardCompletedDataPoints);
+            // console.log(cardCompletedDataPoints);
 
 
             var cardsChart = new CanvasJS.Chart("cardsChartContainer", {
@@ -75,11 +75,17 @@
 
 
         window.onload = function () {
+            var t = setInterval(iterateEvery100Milis, 100);
+        }
+
+        
+        const iterateEvery100Milis = () => {
             $.get("http://wngnelson.com/api/tidywork/api/user.php?meta", function (data) {
                 setupCardsGraph(data);
                 setupTimeGraph(data);
             });
         }
+
     </script>
 </head>
 
