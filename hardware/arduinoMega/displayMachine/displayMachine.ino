@@ -52,7 +52,7 @@ const int SCREEN_WIDTH = 240;
 //##variables
 
 long counterSegs = 0, timerSegs = 0, ms = 0;
-String cardName = "sample card", tableName = "Doing", timerText = "";
+String cardName = "sample card", columnName = "Doing", timerText = "";
 
 //controllers
 int counterStatus = MODE_PAUSE;
@@ -92,11 +92,13 @@ void refreshScreen() {
   pinModeWriter();
 
   paintButtons();
+  refreshDigits();
 
 }
 
 void refreshDigits() {
   pinModeWriter();
+  printDigits();
 
 }
 
@@ -123,6 +125,13 @@ void paintAllBlack() {
 void paintDigitsBlack() {
 }
 
+void printDigits() {
+  printCard();
+  printColumn();
+  printTimer();
+  printCounter();
+}
+
 void paintButtons() {
 
   //Painting
@@ -145,32 +154,47 @@ void paintButtons() {
 
 
   //Text
-  locateAndPrint("Timer", SCREEN_WIDTH*1/8, SCREEN_HEIGHT*27/32, 2);
-  locateAndPrint("Counter", SCREEN_WIDTH*9/16, SCREEN_HEIGHT*27/32, 2);
+  locateAndPrint("Timer", SCREEN_WIDTH * 1 / 8, SCREEN_HEIGHT * 27 / 32, 2);
+  locateAndPrint("Counter", SCREEN_WIDTH * 9 / 16, SCREEN_HEIGHT * 27 / 32, 2);
 
-  
-  locateAndPrint("Card", SCREEN_WIDTH*1/16, SCREEN_HEIGHT*20/32, 1);
-  locateAndPrint("Board", SCREEN_WIDTH*5/16, SCREEN_HEIGHT*20/32, 1);
 
-  locateAndPrint("Counter", SCREEN_WIDTH*9/16, SCREEN_HEIGHT*19/32, 2);
+  locateAndPrint("Card", SCREEN_WIDTH * 1 / 16, SCREEN_HEIGHT * 20 / 32, 1);
+  locateAndPrint("Board", SCREEN_WIDTH * 5 / 16, SCREEN_HEIGHT * 20 / 32, 1);
+
+  locateAndPrint("Counter", SCREEN_WIDTH * 9 / 16, SCREEN_HEIGHT * 19 / 32, 2);
 
 
 
 }
 
 
-void printCard(){
-  
+void printCard() {
+  String message = "Card: ";
+  locateAndPrint( message, SCREEN_WIDTH * 1 / 12, SCREEN_HEIGHT * 1 / 6, 2);
+  locateAndPrint( cardName, SCREEN_WIDTH * 13 / 24, SCREEN_HEIGHT * 1 / 6, 1.2);
+
 }
 
-void printTask(){}
+void printColumn() {
+  String message = "Table: ";
+  locateAndPrint( message, SCREEN_WIDTH * 1 / 12, SCREEN_HEIGHT * 2 / 9, 2);
+  locateAndPrint( columnName, SCREEN_WIDTH * 13 / 24, SCREEN_HEIGHT * 2 / 9, 1.2);
+}
 
-void printTimer(){}
+void printTimer() {
+  String message = "Timer: ";
+  locateAndPrint( message, SCREEN_WIDTH * 1 / 12, SCREEN_HEIGHT * 5 / 18, 2);
+  locateAndPrint( (String)timerSegs, SCREEN_WIDTH * 13 / 24, SCREEN_HEIGHT * 5 / 18, 2);
+}
 
 
-void printCounter(){}
+void printCounter() {
+  String message = "Counter: ";
+  locateAndPrint( message, SCREEN_WIDTH * 1 / 12, SCREEN_HEIGHT * 1 / 3, 2);
+  locateAndPrint( (String)counterSegs, SCREEN_WIDTH * 13 / 24, SCREEN_HEIGHT * 1 / 3, 2);
+}
 
-void locateAndPrint(String text, double x, double y, int size) {
+void locateAndPrint(String text, double x, double y, double size) {
   tft.setTextSize(size);
   tft.setCursor(x, y);
   tft.println(text);
