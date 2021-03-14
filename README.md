@@ -4,7 +4,10 @@ We were inspired by Trello to make our own version of a web app that enhances pe
 
 ## What it does
 TidyWorks lets users create a board with different lists. These lists are split up into to-do, doing, and done lists, but the user can further customize these lists to suit their needs. The user can add boxes for specific tasks and make comments in those boxes on how the task should be done.
-TidyWorks also comes in with a hardware assistant. The hardware assistant idea and personalized screen that helps you focus better on the work. You can view your current task, as well as to Set timers to time how much time you work on the project, setup counters (to block 20 minutes worktimes countdown) , complete cards: that update to our backend and also change the cards you are working on.  
+TidyWorks also comes in with a hardware assistant. The hardware assistant idea and personalized screen that helps you focus better on the work. You can view your current task, as well as to Set timers to time how much time you work on the project, setup counters (to block 20 minutes worktimes countdown) , complete cards: that update to our backend and also change the cards you are working on.
+
+## Demo Video
+This is a [link](https://www.youtube.com/watch?v=nwrKIj1mBzs) to view a demo of our project.
 
 ## How we built it
 On the front-end side, we used html, css, javascript, and bootstrap to create an interactive website.
