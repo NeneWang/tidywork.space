@@ -57,7 +57,7 @@
                 title="Select Board" 
                 ok-only 
                 ok-title="Switch Boards"
-                @ok="">
+                @ok="switchBoards()">
 
                 <!-- board options -->
                 <label><b>Your Boards</b></label>
@@ -66,7 +66,7 @@
                     id="boardSelectionOptions" 
                     v-model="currentBoard"
                 >
-                    <option v-for="(board, b) in boards" :value="b">{{board.name}}</option>
+                    <option v-for="(board, b) in boards" :value="board">{{board.name}}</option>
                 </select>
 
 

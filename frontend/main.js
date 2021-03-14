@@ -163,6 +163,11 @@ const app = new Vue({
 
         // FRONTEND functions
 
+        // switches current board, columns 
+        switchBoards(){
+            this.columns = this.currentBoard.columns; 
+        },
+
         // helper function that convert javascript date object to ISO string ('YYYY-MM-DDThh:mm')
         javascriptDateObjectToISOString(date) {
             day = date.getDate().toString();
