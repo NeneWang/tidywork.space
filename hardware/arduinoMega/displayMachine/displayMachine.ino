@@ -61,7 +61,11 @@ int timerStatus = MODE_PAUSE;
 
 
 
+
 void setup() {
+
+  counterStatus = MODE_PLAY;
+  timerStatus = MODE_PLAY;
   Serial.begin(9600);
   //Timer One     
   Timer1.initialize (1000);
@@ -84,21 +88,32 @@ void loop() {
 //general machine
 
 void iterateEverySecond() {
+  refreshDigits();
 
 }
 
 
 void refreshScreen() {
   pinModeWriter();
-
+  paintAllBlack();
+  
+  
   paintButtons();
   refreshDigits();
+  
+  pinModeReader();
 
 }
 
 void refreshDigits() {
   pinModeWriter();
+  paintDigitsBlack();
+  
   printDigits();
+
+
+
+  pinModeReader();
 
 }
 
@@ -111,8 +126,6 @@ void pinModeWriter() {
 }
 
 void pinModeReader() {
-  pinMode(XM, INPUT);
-  pinMode(YP, INPUT);
 }
 
 //Paint function should be called after pinModeWriter()
@@ -120,9 +133,12 @@ void pinModeReader() {
 void paintAllBlack() {
 
   tft.fillScreen(BLACK);
+  tft.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, BLACK);
 }
 
 void paintDigitsBlack() {
+
+  tft.fillRect(SCREEN_WIDTH/2, 0, SCREEN_WIDTH, SCREEN_HEIGHT / 2, BLACK);
 }
 
 void printDigits() {
@@ -178,7 +194,7 @@ void printCard() {
 void printColumn() {
   String message = "Table: ";
   locateAndPrint( message, SCREEN_WIDTH * 1 / 12, SCREEN_HEIGHT * 2 / 9, 2);
-  locateAndPrint( columnName, SCREEN_WIDTH * 13 / 24, SCREEN_HEIGHT * 2 / 9, 1.2);
+  locateAndPrint( columnName, SCREEN_WIDTH * 13 / 24, SCREEN_HEIGHT * 2 / 9, 2);
 }
 
 void printTimer() {
