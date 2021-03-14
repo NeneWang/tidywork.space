@@ -59,8 +59,9 @@ const app = new Vue({
             axios.get('http://wngnelson.com/api/tidywork/api/board.php').
                 then(response => {
 
-                    // ##TODO: make this equivalent to wahtever data you are using
+                    // TODO: make this equivalent to wahtever data you are using
                     this.jsonData = response.data;
+                    populateCurrentBoard(); 
                 }
                 );
         },
@@ -89,8 +90,23 @@ const app = new Vue({
                 });
         },
 
+        // populates currentBoard based on data fetched from DB 
+        populateCurrentBoard(){
+            // extract arrays of each type of object (users, boards, columns, etc.) 
+            let users = this.jsonData.users; 
+            let boards = this.jsonData.boards; 
+            let columns = this.jsonData.columns; 
+            let cards = this.jsonData.cards;
+
+            // call helper functions to format data
+            let usersToBoards = this.mapUsersToBoards(users, boards); // usersToBoards = {*userId* : [{board}] }
+            let boardsToColumns = this.mapBoardsToColumns(boards, columns); // boardsToColumns = {*boardId* : [{column}] }
+            let columnsToCards = this.mapColumnsToCards(columns, cards); // columnsToCards = {*columnId* : [{card}] }
+
+        },
+
         // helper function to map users to their associated board (objects) based on FK (boardId) in user.userData.tables
-        // organizeUsers: {*userId* : [{board}] }
+        // return: organizeUsers: {*userId* : [{board}] }
         mapUsersToBoards(users, boards){
             let organizeUsers = {};
             // for each user 
@@ -101,6 +117,7 @@ const app = new Vue({
                 // add userId field to organizeUsers object, set equal to array of boards
                 Vue.set(organizeUsers, users[i].userId, userBoards); 
             }
+            return organizeUsers; 
 
             // TODO: set this.boards equal to array of boards based on this.currentUser
         },
@@ -117,6 +134,7 @@ const app = new Vue({
                 // add boardId field to organizeBoards object, set equal to array of columns
                 Vue.set(organizeBoards, boards[i].boardId, boardColumns); 
             }
+            return organizeBoards; 
 
             // TODO: set this.columns equal to array of columns based on this.currentBoard
         },
@@ -133,6 +151,7 @@ const app = new Vue({
                 // add columnId field to organizeColumns object, set equal to array of cards
                 Vue.set(organizeColumns, columns[i].columnId, columnCards); 
             }
+            return organizeColumns; 
 
             // for each column in columns 
             // (afterthought: I thinkkk this can go inside for loop instead of separate one)
