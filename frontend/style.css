@@ -7,20 +7,48 @@
 
  /* General Styling */
 
- ul{
-	 list-style: none;
-	 text-align: center;
-	 padding: 0;
- }
-
- li{
-	 margin: 10%;
- }
 
 /* Class Styling */
 .title{
 	color: blue;
 	text-align: center;
+}
+
+/* dropdowns */
+.edit-board-dropdown {
+	text-align: center;
+}
+
+.edit-board-dropdown ul {
+	list-style: none;
+	text-align: center;
+	padding: 0;
+}
+
+.edit-board-dropdown ul li{
+	margin: 10%;
+}
+
+
+
+.edit-cards-dropdown ul{
+	list-style: none;
+	text-align: center;
+	padding: 0;
+}
+
+.edit-cards-dropdown ul li{
+	margin: 10%;
+}
+
+.edit-column-dropdown ul{
+	list-style: none;
+	text-align: center;
+	padding: 0;
+}
+
+.edit-column-dropdown ul li{
+	margin: 10%;
 }
 
 .edit-board-buttons{

@@ -43,7 +43,7 @@
         <header>
             <h1 class="title">{{currentBoard.name}}</h1>
 
-            <div class="edit-board-buttons">
+            <div class="edit-board-dropdown">
                 <!-- EDIT BOARD b-dropdown -->
                 <b-dropdown boundary="window" text="Edit Board">
                     <div class="mx-3 my-3">
@@ -180,10 +180,10 @@
                                                     <b-card-footer> 
 
                                                         <!-- card BUTTONS -->
-                                                        <div class="">
+                                                        <div>
                                                             <!-- EDIT CARD b-dropdown -->
                                                             <b-dropdown boundary="window" text="Edit Card">
-                                                                <div class="mx-3 my-3">
+                                                                <div class="edit-cards-dropdown">
                                                                     <ul>
                                                                         <li>
                                                                             <!-- modal button to show card details -->
@@ -248,7 +248,7 @@
                                                                         <div>
                                                                             <p>Comment Timestamp: {{displayDate(comment.timestamp)}}</p>
                                                                             <p>Comment Description: {{comment.description}}</p>
-                                                                            <b-button variant="danger" block @click="deleteComment(col, car, com)">Delete Comment</b-button>
+                                                                            <b-button variant="danger" block @click="deleteComment(col, car, com)">🗑️</b-button>
                                                                         </div>
                                                                     </li>
                                                                 </ul>
@@ -285,7 +285,7 @@
                                     <b-card-footer>
 
                                         <!-- button DROPDOWN -->
-                                        <b-dropdown boundary="window" text="Edit Column">
+                                        <b-dropdown class="edit-column-dropdown" boundary="window" text="Edit Column">
                                             <div class="mx-3 my-3">
                                                 <ul> 
                                                     <li>
