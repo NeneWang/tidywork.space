@@ -19,7 +19,7 @@ int countRep = 0;
 
 boolean flagUpdateCard = false, prevflagUpdateCard = flagUpdateCard, flagUpdateTime = false, prevflagUpdateTime = flagUpdateTime;
 
-HTTPClient http;
+
 
 void setup () {
 
@@ -56,7 +56,7 @@ void loop() {
 
 void getCardsData() {
   if (WiFi.status() == WL_CONNECTED) { //Check WiFi connection status
-
+    HTTPClient http;
 
 
     http.begin("http://wngnelson.com/api/tidywork/api/card.php");
@@ -67,7 +67,7 @@ void getCardsData() {
       String payload = http.getString();   //Get the request response payload
       DynamicJsonDocument doc(8192);
       deserializeJson(doc, payload);
-      JsonArray arrayOfCards = doc["cards"].as<JsonArray>();
+      JsonArray arrayOfCards = doc["date"].as<JsonArray>();
       for (JsonVariant v : arrayOfCards) {
         Serial.println(v.as<String>());
       }
@@ -99,7 +99,7 @@ int getFirstCardIndex(DynamicJsonDocument doc) {
 void confirmUpdate() {
   //If this is on, then add the newCards count;
   if (countRep > 4) {
-    //    updateUserCard();
+    updateUserCard();
     updateUserTime();
 
 
@@ -119,6 +119,7 @@ void confirmUpdate() {
 
 
 void updateUserCard() {
+  HTTPClient http;
   flagUpdateCard = countTrueCard > 2 ? 1 : 0;
   Serial.println("Output countTrueCard:" + (String)countTrueCard);
 
@@ -141,6 +142,7 @@ void updateUserCard() {
         newCards = 0;
 
       }
+      http.end();
 
     }
     prevflagUpdateCard = flagUpdateCard;
@@ -149,6 +151,7 @@ void updateUserCard() {
 
 
 void updateUserTime() {
+  HTTPClient http;
   flagUpdateTime = countTrueTime > 2 ? 1 : 0;
   Serial.println("Output countTrueTime:" + (String)countTrueTime);
 
@@ -156,23 +159,13 @@ void updateUserTime() {
     Serial.println("Output flagUpdate Time:" + (String)flagUpdateTime);
     Serial.println("Output flagUpdate Prev Time:" + (String)prevflagUpdateTime);
     Serial.println("Output countTrueTime:" + (String)countTrueTime);
-    if (flagUpdateTime) {
-      Serial.println("ng weapons");
+      Serial.println("running update user time");
 
       http.begin("http://wngnelson.com/api/tidywork/api/user.php?updateTime");
+      
       int httpCode = http.GET();
-      if (httpCode > 0) { //Check the returning code
-        Serial.println(flagUpdateCard);
+      http.end();
 
-        String payload = http.getString();   //Get the request response payload
-        DynamicJsonDocument doc(8192);
-        deserializeJson(doc, payload);
-
-        newCards = 0;
-
-      }
-
-    }
     prevflagUpdateTime = flagUpdateTime;
   }
 }

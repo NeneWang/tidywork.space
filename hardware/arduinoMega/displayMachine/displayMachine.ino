@@ -49,6 +49,10 @@ const int SCREEN_WIDTH = 240;
 #define MODE_PLAY 0
 #define MODE_PAUSE 1
 
+//DEFINE COMM
+#define SUC 24
+#define SUT 25
+
 //##variables
 
 long counterSegs = 0, timerSegs = 0, ms = 0;
@@ -78,6 +82,9 @@ void setup() {
   refreshScreen();
   startMillis = millis();
 
+  pinMode(SUC, OUTPUT);
+  pinMode(SUT, OUTPUT);
+
 }
 
 void loop() {
@@ -88,6 +95,7 @@ void loop() {
   {
     buttonHandlers();
     startMillis = currentMillis;
+    setTimerActive();
   }
 
 
@@ -274,7 +282,23 @@ void buttonHandlers() {
 
 //button handlers
 
+void setTimerActive() {
+  if (timerStatus == MODE_PLAY) {
+    digitalWrite(SUT, HIGH);
+  } else {
+    digitalWrite(SUT, LOW);
+  }
 
+}
+
+
+void setCardNew() {
+  digitalWrite(SUC, HIGH);
+
+  delay(1000);
+  digitalWrite(SUC, LOW);
+
+}
 
 void cardPressed () {
   Serial.println("Card");
@@ -286,6 +310,7 @@ void boardPressed () {
 
 void completePressed () {
   Serial.println("Completed");
+  setCardNew();
 }
 
 void timerPressed () {
@@ -358,7 +383,7 @@ void timerColor() {
       break;
   }
 
-  
+
   tft.drawRect( 0, SCREEN_HEIGHT * 3 / 4, SCREEN_WIDTH / 2, 80, WHITE);
   locateAndPrint("Timer", SCREEN_WIDTH * 1 / 8, SCREEN_HEIGHT * 27 / 32, 2);
 
