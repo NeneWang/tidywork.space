@@ -6,8 +6,7 @@
 
 <head>
     <script type="text/javascript">
-        var dummyData;
-        var metaDataArray;
+        var dummyData, metaDataArray, userIsWorking = false;
         const setupCardsGraph = (data) => {
             dummyData = data;
             // console.log(dummyData);
@@ -44,7 +43,7 @@
             cardsChart.render();
         }
 
-        
+
         const setupTimeGraph = (data) => {
             dummyData = data;
             metaDataArray = dummyData.meta;
@@ -59,8 +58,8 @@
             })
 
             var timeSpentChart = new CanvasJS.Chart("timeChartContainer", {
-                theme: "light1", 
-                animationEnabled: false, 	
+                theme: "light1",
+                animationEnabled: false,
                 title: {
                     text: "Time Spent"
                 },
@@ -81,22 +80,38 @@
         var oldData = {};
         const iterateEvery100Milis = () => {
             $.get("http://wngnelson.com/api/tidywork/api/user.php?meta", function (data) {
-                if(JSON.stringify(oldData) === JSON.stringify(data)){
+                if (JSON.stringify(oldData) === JSON.stringify(data)) {
                     return;
                 }
                 setupCardsGraph(data);
                 setupTimeGraph(data);
+                setText(data);
+
+
 
                 oldData = data;
             });
         }
 
+        const setText = (data) => {
+
+            // console.log(data.meta[3].metaData.isTracking);
+            userIsWorking = data.meta[3].metaData.isTracking;
+            $("#currentStatus").text(userIsWorking == true ? "User is on a task" : "User is taking a break");
+
+
+            console.log(`is user working?: ${userIsWorking}`);
+        }
     </script>
 </head>
 
 <body>
+    <div>
+        <h2 id="currentStatus"> </h2>
+    </div>
     <div id="cardsChartContainer" style="height: 370px; width: 100%;"></div>
     <div id="timeChartContainer" style="height: 370px; width: 100%;"></div>
+
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"> </script>
 </body>
 
