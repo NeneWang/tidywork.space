@@ -248,6 +248,11 @@ const app = new Vue({
             this.boards.push(newBoardToAdd);
             // reset newColumn fields 
             this.newBoard = resetNewBoard;
+            // switch to new board 
+            this.currentBoard = newBoardToAdd;
+            // clear columns
+            this.columns = []; 
+
         },
         // deletes card from column based on indicies
         deleteCard(column, card) {
