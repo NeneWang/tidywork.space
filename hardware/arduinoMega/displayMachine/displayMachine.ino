@@ -56,7 +56,7 @@ const int SCREEN_WIDTH = 240;
 //##variables
 
 long counterSegs = 0, timerSegs = 0, ms = 0;
-String cardName = "sample card", columnName = "Doing", timerText = "";
+String cardName = "sample card", columnName = "Schoolwork", timerText = "";
 
 //controllers
 int counterStatus = MODE_PAUSE;
@@ -66,6 +66,11 @@ unsigned long startMillis;
 unsigned long currentMillis;
 
 
+//Dummy Data: Unfortunelly didnt have enough time to implment this, but you get the idea
+const char *cards[4] = { "Meeting", "Market Research",
+                    "Design UX", "Design UI"
+                  };
+int cardIndex = 0;
 
 void setup() {
 
@@ -89,7 +94,9 @@ void setup() {
 
 void loop() {
 
-
+  if(cardIndex>3){
+    cardIndex = 0;
+  }
   currentMillis = millis();
   if (currentMillis - startMillis >= 200)
   {
@@ -206,7 +213,7 @@ void printCard() {
 
   String message = "Card: ";
   locateAndPrint( message, SCREEN_WIDTH * 1 / 12, SCREEN_HEIGHT * 1 / 6, 2);
-  locateAndPrint( cardName, SCREEN_WIDTH * 13 / 24, SCREEN_HEIGHT * 1 / 6, 1.2);
+  locateAndPrint( cards[cardIndex], SCREEN_WIDTH * 13 / 24, SCREEN_HEIGHT * 1 / 6, 1);
 
 }
 
@@ -214,7 +221,7 @@ void printColumn() {
   pinModeWriter();
   String message = "Table: ";
   locateAndPrint( message, SCREEN_WIDTH * 1 / 12, SCREEN_HEIGHT * 2 / 9, 2);
-  locateAndPrint( columnName, SCREEN_WIDTH * 13 / 24, SCREEN_HEIGHT * 2 / 9, 2);
+  locateAndPrint( columnName, SCREEN_WIDTH * 10 / 24, SCREEN_HEIGHT * 2 / 9, 2);
 }
 
 void printTimer() {
@@ -302,6 +309,8 @@ void setCardNew() {
 
 void cardPressed () {
   Serial.println("Card");
+  cardIndex++;
+
 }
 
 void boardPressed () {
@@ -309,6 +318,7 @@ void boardPressed () {
 }
 
 void completePressed () {
+  cardIndex++;
   Serial.println("Completed");
   setCardNew();
 }
